@@ -1,9 +1,10 @@
 ---
 import { getEntry } from 'astro:content';
 import { icons } from '../icons';
+import Logo from '../icons/logo.svg';
 
-// navbar из макета (фреймы navbar-static / navbar-active): одна кнопка-гамбургер справа,
-// по нажатию под ней раскрывается список пунктов-пилюль. Пункты приходят из CMS.
+// navbar из макета (фреймы navbar-static / navbar-active): логотип слева ведёт на главную,
+// справа кнопка-гамбургер, по нажатию под ней раскрывается список пунктов-пилюль из CMS.
 // Меню выпадает поверх контента (position: absolute), поэтому страница при открытии не дёргается.
 const nav = (await getEntry('navigation', 'navigation'))!.data;
 const Menu = icons['menu-05'];
@@ -12,6 +13,10 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
 ---
 
 <header class="navbar">
+  <a class="logo" href="/" aria-label="На главную">
+    <Logo />
+  </a>
+
   <div class="menu" data-menu data-open="false">
     <button
       class="button-icon"
@@ -55,9 +60,21 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
     position: relative;
     z-index: 30;
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: space-between;
     height: var(--navbar-height);
     padding: var(--space-top-margin) var(--space-margin) var(--space-l);
+  }
+
+  /* Логотип: высота 48 на мобильном и 64 на десктопе, ширина по пропорции. */
+  .logo {
+    display: flex;
+    flex: none;
+  }
+
+  .logo :global(svg) {
+    width: auto;
+    height: 48px;
   }
 
   .menu {
@@ -164,6 +181,12 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
   .item:focus-visible {
     transform: scale(1.04);
     transform-origin: right center;
+  }
+
+  @media (min-width: 1024px) {
+    .logo :global(svg) {
+      height: 64px;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
