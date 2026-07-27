@@ -41,8 +41,8 @@ const ring = (data?.images ?? []).flatMap((image) => [
             <h2 class="t-h4 title">{data.title}</h2>
             {data.caption && <p class="t-p1 caption">{data.caption}</p>}
             <div class="actions">
-              <Button href={data.galleryUrl} label={data.galleryLabel} variant="secondary" />
-              <Button href={data.instagramUrl} label={data.instagramLabel} variant="soft" external />
+              <Button href={data.galleryUrl} label={data.galleryLabel} variant="dark" chevron />
+              <Button href={data.instagramUrl} label={data.instagramLabel} variant="light" external />
             </div>
           </div>
         </div>

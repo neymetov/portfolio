@@ -17,7 +17,7 @@ const { title, note, buttonHref, buttonLabel } = Astro.props;
     <h2 class="t-h1">{title}</h2>
     {note && <span class="t-h5 dim">{note}</span>}
   </div>
-  {buttonHref && buttonLabel && <Button href={buttonHref} label={buttonLabel} variant="secondary" />}
+  {buttonHref && buttonLabel && <Button href={buttonHref} label={buttonLabel} variant="dark" chevron />}
 </div>
 
 <style>

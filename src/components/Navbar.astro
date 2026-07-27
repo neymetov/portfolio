@@ -109,6 +109,20 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
     background: var(--color-neutral-900);
     color: var(--color-neutral-300);
     cursor: pointer;
+    transition:
+      background-color 160ms ease,
+      border-color 160ms ease;
+  }
+
+  /* Состояния из фрейма buttons: при наведении светлеет заливка, при нажатии темнеет рамка. */
+  .button-icon:hover {
+    background: var(--color-neutral-700);
+    border-color: var(--color-neutral-700);
+  }
+
+  .button-icon:active {
+    background: var(--color-neutral-700);
+    border-color: var(--color-neutral-900);
   }
 
   .icon {
@@ -192,6 +206,7 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .button-icon,
     .items li,
     .item {
       transition-duration: 0ms;

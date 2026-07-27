@@ -151,7 +151,11 @@ button {
   padding: var(--space-l);
 }
 
-/* Кнопка из макета: h48 (64 на десктопе), padding l, radius xl. Два варианта заливки. */
+/*
+  Кнопка из макета (фрейм buttons): h48 (64 на десктопе), padding l, radius xl.
+  Два вида — тёмная и светлая, у каждого три состояния. При нажатии заливка та же,
+  что при наведении, а меняется рамка: у тёмной темнеет, у светлой становится заметнее.
+*/
 .btn {
   display: inline-flex;
   align-items: center;
@@ -164,23 +168,47 @@ button {
   cursor: pointer;
   font-size: var(--font-size-p2);
   line-height: var(--line-height-p2);
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease;
 }
 
-.btn-primary {
-  background: var(--color-neutral-800);
-  color: var(--color-neutral-50);
+.btn-dark {
+  background: var(--color-neutral-900);
+  border-color: var(--color-neutral-900);
+  color: var(--color-neutral-300);
 }
 
-.btn-soft {
+.btn-dark:hover {
+  background: var(--color-neutral-700);
+  border-color: var(--color-neutral-700);
+}
+
+.btn-dark:active {
+  background: var(--color-neutral-700);
+  border-color: var(--color-neutral-800);
+}
+
+.btn-light {
   background: var(--color-neutral-200);
   border-color: var(--color-neutral-300);
   color: var(--color-neutral-800);
 }
 
-.btn-secondary {
-  background: var(--color-neutral-900);
-  border-color: var(--color-neutral-700);
-  color: var(--color-neutral-300);
+.btn-light:hover {
+  background: var(--color-neutral-300);
+  border-color: var(--color-neutral-300);
+}
+
+.btn-light:active {
+  background: var(--color-neutral-300);
+  border-color: var(--color-neutral-400);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
 }
 
 /* Плашка-тег: должность, специальность, рубрика. */
