@@ -113,17 +113,15 @@ const { title, cards } = Astro.props;
     }
 
     /*
-      Скрытый caption: строка грида едет от 0fr к 1fr (высота считается по контенту),
-      а сам текст выезжает снизу. Заголовок при этом плавно поднимается.
+      Место под описание зарезервировано всегда, поэтому высота карточки при наведении
+      не меняется и сетка не прыгает. Появляется только сам текст: выезжает снизу
+      и проявляется. Карточка обрезает выезд по своей границе.
     */
-    .caption {
-      display: grid;
-      grid-template-rows: 0fr;
-      transition: grid-template-rows 320ms cubic-bezier(0.22, 0.8, 0.36, 1);
+    .card {
+      overflow: clip;
     }
 
     .caption-text {
-      overflow: hidden;
       opacity: 0;
       transform: translateY(1rem);
       transition:
@@ -131,16 +129,10 @@ const { title, cards } = Astro.props;
         transform 320ms cubic-bezier(0.22, 0.8, 0.36, 1);
     }
 
-    .card:hover .caption,
-    .card:focus-within .caption {
-      grid-template-rows: 1fr;
-    }
-
     .card:hover .caption-text,
     .card:focus-within .caption-text {
       opacity: 1;
       transform: translateY(0);
-      transition-delay: 60ms;
     }
   }
 
