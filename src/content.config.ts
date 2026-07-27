@@ -99,6 +99,7 @@ const site = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string().default(''),
+    ogImage: z.string(),
   }),
 });
 

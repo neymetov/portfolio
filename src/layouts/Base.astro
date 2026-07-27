@@ -1,4 +1,5 @@
 ---
+import { getEntry } from 'astro:content';
 import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
 import SiteFooter from '../components/SiteFooter.astro';
@@ -6,9 +7,17 @@ import SiteFooter from '../components/SiteFooter.astro';
 interface Props {
   title: string;
   description?: string;
+  // Страницы работ подставляют собственную обложку; остальные берут картинку из настроек сайта.
+  image?: string;
 }
 
-const { title, description = '' } = Astro.props;
+const { title, description = '', image } = Astro.props;
+
+const site = (await getEntry('site', 'site'))!.data;
+
+// Абсолютные URL: соцсети и поисковики относительных путей не принимают.
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const preview = new URL(image ?? site.ogImage, Astro.site);
 ---
 
 <!doctype html>
@@ -18,8 +27,15 @@ const { title, description = '' } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
+    <link rel="canonical" href={canonical} />
+
     <meta property="og:title" content={title} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={preview} />
+    {description && <meta property="og:description" content={description} />}
+    <meta name="twitter:card" content="summary_large_image" />
+
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   </head>
   <body>

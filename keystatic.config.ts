@@ -27,6 +27,7 @@ export default config({
       schema: {
         title: fields.text({ label: 'Заголовок в браузере и поиске' }),
         description: fields.text({ label: 'Описание для поиска и соцсетей', multiline: true }),
+        ogImage: image('Картинка для ссылок в соцсетях', 'hero'),
       },
     }),
 

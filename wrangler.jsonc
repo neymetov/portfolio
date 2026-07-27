@@ -12,5 +12,12 @@
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page"
-  }
+  },
+  // Домен объявлен здесь, а не только в панели: тогда привязка живёт в репозитории и
+  // воспроизводится каждым деплоем. Зона neymetov.com должна быть в том же аккаунте Cloudflare —
+  // DNS-запись и сертификат Cloudflare создаёт сам.
+  "routes": [
+    { "pattern": "neymetov.com", "custom_domain": true },
+    { "pattern": "www.neymetov.com", "custom_domain": true }
+  ]
 }

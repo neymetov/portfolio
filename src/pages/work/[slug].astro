@@ -17,7 +17,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 const { work } = Astro.props;
-const { title, shortDescription, galleryBlocks } = work.data;
+const { title, shortDescription, heroImage, galleryBlocks } = work.data;
 
 const page = (await getEntry('worksPage', 'works'))!.data;
 
@@ -28,7 +28,7 @@ const relatedWorks = (await getCollection('works'))
   .slice(0, 4);
 ---
 
-<Base title={`${title} — Elshan Neymatov`} description={shortDescription}>
+<Base title={`${title} — Elshan Neymatov`} description={shortDescription} image={heroImage}>
   <article>
     <section class="hero-block">
       <FeaturedWork work={work} heading="h1" />
