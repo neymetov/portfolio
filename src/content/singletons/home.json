@@ -7,19 +7,19 @@
     "lessLabel": "Close +",
     "education": [
       {
-        "logo": "/images/education/aacu.png",
+        "logo": "/images/education/heroCv/education/0/logo.png",
         "name": "Azerbaijan Architecture and Construction University",
         "dates": "2013–2017",
         "program": "Graphic & Interior Designer"
       },
       {
-        "logo": "/images/education/bhsad.png",
+        "logo": "/images/education/heroCv/education/1/logo.png",
         "name": "British higher school of art & design at Moscow, Russia",
         "dates": "2019",
         "program": "Visual Communications"
       },
       {
-        "logo": "/images/education/skvot.png",
+        "logo": "/images/education/heroCv/education/2/logo.png",
         "name": "SKVOT — POP CULTURE SCHOOL",
         "dates": "2021",
         "program": "Art Direction"
@@ -27,31 +27,31 @@
     ],
     "experience": [
       {
-        "logo": "/images/experience/bir.png",
+        "logo": "/images/experience/heroCv/experience/0/logo.png",
         "company": "Bir ecosystem",
         "dates": "2025–2026",
         "role": "Design Team Chapter Lead"
       },
       {
-        "logo": "/images/experience/guavapay.png",
+        "logo": "/images/experience/heroCv/experience/1/logo.png",
         "company": "Guavapay",
         "dates": "2023–2025",
         "role": "Design Team Lead"
       },
       {
-        "logo": "/images/experience/pasha.png",
+        "logo": "/images/experience/heroCv/experience/2/logo.png",
         "company": "PASHA Bank OJSC",
         "dates": "2020–2023",
         "role": "Senior Graphic Designer"
       },
       {
-        "logo": "/images/experience/paradox.png",
+        "logo": "/images/experience/heroCv/experience/3/logo.png",
         "company": "Paradox Branding Studio",
         "dates": "2017–2020",
         "role": "Graphic Designer"
       },
       {
-        "logo": "/images/experience/shamans.png",
+        "logo": "/images/experience/heroCv/experience/4/logo.png",
         "company": "Creative SHAMANS Bureau",
         "dates": "2017",
         "role": "Graphic Designer"
@@ -62,21 +62,21 @@
     "languagesTitle": "What languages do I speak and work in?",
     "languages": [
       {
-        "flag": "/images/flags/azerbaijani.svg",
+        "flag": "/images/flags/heroCv/languages/0/flag.svg",
         "name": "Azerbaijani"
       },
       {
-        "flag": "/images/flags/russian.svg",
+        "flag": "/images/flags/heroCv/languages/1/flag.svg",
         "name": "Russian"
       },
       {
-        "flag": "/images/flags/english.svg",
+        "flag": "/images/flags/heroCv/languages/2/flag.svg",
         "name": "English"
       }
     ]
   },
   "heroImage": {
-    "src": "/images/hero/cv-image.png",
+    "src": "/images/hero/heroImage/src.png",
     "alt": "Elshan Neymatov"
   },
   "skillSectionTitle": "What can I do",

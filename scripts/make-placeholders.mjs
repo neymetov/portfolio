@@ -49,6 +49,4 @@ for (const name of works) {
   await write(`public/images/works/${name}-gallery-b.svg`, placeholder(`${name} / gallery`));
 }
 
-await write('public/favicon.svg', placeholder('EN', 32, 32));
-
 console.log('placeholders: готово');
