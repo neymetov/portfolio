@@ -44,5 +44,16 @@ const preview = new URL(image ?? site.ogImage, Astro.site);
       <slot />
     </main>
     <SiteFooter />
+
+    <script>
+      // Убираем «Сохранить изображение как…» и перетаскивание картинок.
+      // Полноценной защитой это не является: файлы всё равно лежат в исходниках страницы —
+      // от копирования спасают водяной знак и защита от встраивания на стороне Cloudflare.
+      for (const event of ['contextmenu', 'dragstart'] as const) {
+        document.addEventListener(event, (e) => {
+          if (e.target instanceof HTMLImageElement) e.preventDefault();
+        });
+      }
+    </script>
   </body>
 </html>
