@@ -66,18 +66,20 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
     padding: var(--space-top-margin) var(--space-margin) var(--space-l);
   }
 
-  /* Логотип: высота 48 на мобильном и 64 на десктопе, ширина по пропорции. */
+  /* На мобильном логотип скрыт — остаётся только кнопка меню. */
   .logo {
-    display: flex;
+    display: none;
     flex: none;
   }
 
   .logo :global(svg) {
     width: auto;
-    height: 48px;
+    height: 64px;
   }
 
   .menu {
+    /* Кнопка всегда у правого края — в том числе когда логотип скрыт и она в строке одна. */
+    margin-left: auto;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -184,8 +186,8 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
   }
 
   @media (min-width: 1024px) {
-    .logo :global(svg) {
-      height: 64px;
+    .logo {
+      display: flex;
     }
   }
 
