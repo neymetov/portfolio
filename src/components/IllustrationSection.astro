@@ -52,6 +52,13 @@ const ring = (data?.images ?? []).flatMap((image) => [
 }
 
 <style>
+  /* Без регистрации свойства браузер считает --spin строкой и анимировать его не может. */
+  @property --spin {
+    syntax: '<angle>';
+    inherits: true;
+    initial-value: 0deg;
+  }
+
   /* --- Мобильный баннер: изображение на фоне, панель с текстом снизу --- */
   .pin {
     position: relative;
@@ -154,55 +161,55 @@ const ring = (data?.images ?? []).flatMap((image) => [
       width: 200px;
     }
 
-    /* --- Круг --- */
+    /* --- Эллиптическая карусель --- */
     .ring {
       /*
-        Диаметр берётся от ширины, а не от высоты: в макете круг шире экрана по вертикали,
-        верхние и нижние элементы срезаются краем секции и выезжают по мере вращения.
-        Радиус заведомо больше половины текстового блока, иначе иллюстрации наезжают на текст.
+        Траектория — эллипс, как в макете (шире, чем выше): по горизонтали радиус упирается
+        в ширину экрана, по вертикали — в высоту минус сама картинка и отступы секции.
+        Так иллюстрации не срезаются сверху и снизу, а текст в центре остаётся свободным.
       */
-      --ring-size: min(1200px, 92vw);
-      --radius: calc(var(--ring-size) / 2);
+      --item: min(190px, 14vw);
+      --rx: min(46vw, 620px);
+      --ry: calc((100vh - var(--item) - 2 * var(--space-xl)) / 2);
       --step: calc(360deg / var(--slots));
 
       position: absolute;
       inset: 0;
       display: block;
-      margin: auto;
-      width: var(--ring-size);
-      height: var(--ring-size);
       pointer-events: none;
     }
 
     /*
-      Каждый элемент ставится на окружность поворотом вокруг центра круга,
-      а внутренняя картинка отыгрывает этот поворот назад, чтобы не переворачиваться.
+      Позиция считается тригонометрией от текущего угла: --spin анимируется прокруткой,
+      поэтому элементы едут по эллипсу, а сами картинки не вращаются — только держат наклон.
     */
     .slot {
+      --angle: calc(var(--i) * var(--step) + var(--spin) - 90deg);
+
       position: absolute;
-      inset: 0;
-      margin: auto;
+      left: calc(50% + var(--rx) * cos(var(--angle)));
+      top: calc(50% + var(--ry) * sin(var(--angle)));
+      translate: -50% -50%;
       display: grid;
       place-items: center;
-      width: var(--item);
-      height: var(--item);
-      transform: rotate(calc(var(--i) * var(--step))) translateY(calc(-1 * var(--radius)));
+      width: var(--size);
+      height: var(--size);
     }
 
     .slot.image {
-      --item: calc(var(--ring-size) * 0.2);
+      --size: var(--item);
     }
 
     .slot.decor {
-      --item: calc(var(--ring-size) * 0.12);
+      --size: calc(var(--item) * 0.6);
     }
 
     .art {
       width: 100%;
       height: 100%;
       object-fit: contain;
-      /* Наклон из макета плюс компенсация поворота слота. */
-      transform: rotate(calc(-1 * var(--i) * var(--step) + 10deg));
+      /* Наклон из макета. */
+      transform: rotate(10deg);
     }
 
     .slot.image .art {
@@ -242,44 +249,24 @@ const ring = (data?.images ?? []).flatMap((image) => [
       view-timeline: --illustrations block;
     }
 
-    .ring,
-    .art {
+    .ring {
+      animation: ring-spin linear both;
       animation-timeline: --illustrations;
       animation-range: entry 0% exit 100%;
-      animation-fill-mode: both;
-      animation-timing-function: linear;
-    }
-
-    .ring {
-      animation-name: ring-spin;
-    }
-
-    .art {
-      animation-name: art-counter-spin;
     }
 
     @keyframes ring-spin {
       from {
-        rotate: 0deg;
+        --spin: 0deg;
       }
       to {
-        rotate: 150deg;
-      }
-    }
-
-    @keyframes art-counter-spin {
-      from {
-        rotate: 0deg;
-      }
-      to {
-        rotate: -150deg;
+        --spin: 150deg;
       }
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .ring,
-    .art {
+    .ring {
       animation: none;
     }
   }

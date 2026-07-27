@@ -4,13 +4,28 @@
   "galleryLabel": "Show gallery",
   "galleryUrl": "/works",
   "instagramLabel": "Instagram",
-  "instagramUrl": "https://instagram.com/",
+  "instagramUrl": "https://www.instagram.com/neymetov_/",
   "images": [
-    { "src": "/images/illustrations/illustration-1.png", "alt": "" },
-    { "src": "/images/illustrations/illustration-2.png", "alt": "" },
-    { "src": "/images/illustrations/illustration-3.png", "alt": "" },
-    { "src": "/images/illustrations/illustration-4.png", "alt": "" },
-    { "src": "/images/illustrations/illustration-5.png", "alt": "" }
+    {
+      "src": "/images/illustrations/illustration-1.png",
+      "alt": ""
+    },
+    {
+      "src": "/images/illustrations/illustration-2.png",
+      "alt": ""
+    },
+    {
+      "src": "/images/illustrations/illustration-3.png",
+      "alt": ""
+    },
+    {
+      "src": "/images/illustrations/illustration-4.png",
+      "alt": ""
+    },
+    {
+      "src": "/images/illustrations/illustration-5.png",
+      "alt": ""
+    }
   ],
   "decorImage": "/images/illustrations/star.png",
   "bannerImage": "/images/illustrations/illustration-1.png"
