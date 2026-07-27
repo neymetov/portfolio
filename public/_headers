@@ -1,0 +1,19 @@
+# HTTP-заголовки для всех страниц. Cloudflare читает этот файл из собранной статики.
+# Проверить после деплоя: curl -sD - -o /dev/null https://neymetov.com/
+
+/*
+  # Год принудительного HTTPS: браузер, однажды открыв сайт, больше не пойдёт по http.
+  # preload не включаем намеренно — попадание в список браузеров необратимо месяцами.
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  # Запрещаем браузеру угадывать тип файла вопреки заголовку Content-Type.
+  X-Content-Type-Options: nosniff
+  # Чужие сайты не смогут показать наш в iframe (защита от кликджекинга).
+  Content-Security-Policy: frame-ancestors 'self'
+  # На сторонние домены уходит только источник, без пути и параметров.
+  Referrer-Policy: strict-origin-when-cross-origin
+  # Сайту не нужны камера, микрофон и геолокация — отключаем.
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+
+# Хешированные ассеты Astro можно кешировать навсегда: имя файла меняется вместе с содержимым.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
