@@ -3,10 +3,12 @@ import { getEntry } from 'astro:content';
 import Button from './Button.astro';
 
 // footer-section из макета: карточка на всю ширину с фоновым изображением,
-// заголовок + подпись сверху, CTA прижат к низу. Высота 302 на десктопе.
+// заголовок + подпись сверху, CTA прижат к низу. Под карточкой — строка с копирайтом
+// и быстрыми ссылками: на десктопе по краям одной строки, на мобильном в колонку.
 // Компонент общий для всех страниц и ничего не знает про работы — блог переиспользует его как есть.
 const entry = await getEntry('siteFooter', 'footer');
 const footer = entry?.data;
+const isExternal = (href: string) => /^https?:\/\//.test(href);
 ---
 
 {
@@ -20,6 +22,30 @@ const footer = entry?.data;
         </div>
         <Button href={footer.externalUrl} label={footer.buttonLabel} external />
       </div>
+
+      {(footer.copyright || footer.links.length > 0) && (
+        <div class="meta">
+          {footer.copyright && <p class="copyright">{footer.copyright}</p>}
+
+          {footer.links.length > 0 && (
+            <ul class="links t-p2">
+              {footer.links.map(({ label, href }, index) => (
+                <li>
+                  {/* Разделитель — часть вёрстки, а не контента, поэтому скрыт от скринридера. */}
+                  {index > 0 && <span class="dot" aria-hidden="true">•</span>}
+                  <a
+                    href={href}
+                    rel={isExternal(href) ? 'noopener noreferrer' : undefined}
+                    target={isExternal(href) ? '_blank' : undefined}
+                  >
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
     </footer>
   )
 }
@@ -61,7 +87,52 @@ const footer = entry?.data;
     color: var(--color-neutral-700);
   }
 
+  /* Строка под карточкой: на мобильном в колонку по центру, копирайт уходит вниз. */
+  .meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-x);
+    padding-top: var(--space-x);
+    color: var(--color-neutral-500);
+  }
+
+  .copyright {
+    order: 2;
+    font-size: var(--font-size-p3);
+    line-height: var(--line-height-p3);
+  }
+
+  .links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-l);
+  }
+
+  .links li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-l);
+  }
+
+  .links a:hover {
+    color: var(--color-neutral-800);
+  }
+
   @media (min-width: 1024px) {
+    /* На десктопе одна строка: копирайт слева, ссылки справа. */
+    .meta {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .copyright {
+      order: 0;
+      font-size: var(--font-size-p2);
+      line-height: var(--line-height-p2);
+    }
+
     .banner {
       min-height: 302px;
     }

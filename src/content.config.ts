@@ -130,6 +130,8 @@ const siteFooter = defineCollection({
     backgroundImage: z.string(),
     buttonLabel: z.string(),
     externalUrl: z.string(),
+    copyright: z.string().default(''),
+    links: z.array(z.object({ label: z.string(), href: z.string() })).default([]),
   }),
 });
 

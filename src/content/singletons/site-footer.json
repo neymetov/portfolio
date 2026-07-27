@@ -3,5 +3,11 @@
   "caption": "Design works when one person owns it — from brand to product. Tell me what you need built.",
   "backgroundImage": "/images/hero/footer-bg.png",
   "buttonLabel": "Telegram",
-  "externalUrl": "https://t.me/"
+  "externalUrl": "https://t.me/",
+  "copyright": "© 2026. All Rights Reserved.",
+  "links": [
+    { "label": "Home", "href": "/" },
+    { "label": "Works", "href": "/works" },
+    { "label": "Contacts", "href": "https://t.me/" }
+  ]
 }

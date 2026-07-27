@@ -151,6 +151,16 @@ export default config({
         backgroundImage: image('Фоновое изображение', 'hero'),
         buttonLabel: fields.text({ label: 'Подпись кнопки' }),
         externalUrl: fields.url({ label: 'Ссылка на мессенджер' }),
+        // Строка под карточкой: копирайт и быстрые ссылки. Разделители между ссылками
+        // рисует вёрстка, в контент их вписывать не нужно.
+        copyright: fields.text({ label: 'Копирайт', defaultValue: '© 2026. All Rights Reserved.' }),
+        links: fields.array(
+          fields.object({
+            label: fields.text({ label: 'Подпись' }),
+            href: fields.text({ label: 'Ссылка' }),
+          }),
+          { label: 'Быстрые ссылки', itemLabel: (p) => p.fields.label.value },
+        ),
       },
     }),
   },
