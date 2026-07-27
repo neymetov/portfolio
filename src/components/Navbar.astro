@@ -76,6 +76,16 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
   .logo {
     display: none;
     flex: none;
+    transition: opacity 200ms ease;
+  }
+
+  /*
+    Логотип показывается только у верха страницы: когда навбар возвращается при скролле
+    вверх, приезжает одна кнопка меню. visibility убирает логотип из порядка обхода клавиатурой.
+  */
+  .navbar[data-scrolled='true'] .logo {
+    opacity: 0;
+    visibility: hidden;
   }
 
   .logo :global(svg) {
@@ -218,6 +228,7 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
 
   @media (prefers-reduced-motion: reduce) {
     .navbar,
+    .logo,
     .button-icon,
     .items li,
     .item {
@@ -258,6 +269,7 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
       const atTop = y <= navbar.offsetHeight;
       const menuOpen = navbar.querySelector('[data-menu]')?.getAttribute('data-open') === 'true';
       navbar.dataset.hidden = String(!atTop && !menuOpen && delta > 0);
+      navbar.dataset.scrolled = String(!atTop);
       lastY = y;
     };
 
