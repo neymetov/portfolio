@@ -7,7 +7,7 @@
   //   deploy command: npx wrangler deploy
   // Конфиг обязан быть именно Workers-вида: с "pages_build_output_dir" команда deploy падает
   // с «Missing entry-point to Worker script or to assets directory».
-  "name": "elshan-neymatov-site",
+  "name": "portfolio-upd",
   "compatibility_date": "2026-07-27",
   "assets": {
     "directory": "./dist",
