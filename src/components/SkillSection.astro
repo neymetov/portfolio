@@ -113,26 +113,72 @@ const { title, cards } = Astro.props;
     }
 
     /*
-      Место под описание зарезервировано всегда, поэтому высота карточки при наведении
-      не меняется и сетка не прыгает. Появляется только сам текст: выезжает снизу
-      и проявляется. Карточка обрезает выезд по своей границе.
+      Высота карточки задана пропорцией и не зависит от содержимого (min-height: 0 снимает
+      автоминимум, overflow обрезает лишнее). Поэтому описание раскрывается внутри карточки,
+      сетка не двигается, а прижатый к низу текстовый блок выталкивается вверх — заголовок
+      поднимается, освобождая место описанию.
+    */
+    /*
+      Высота карточки постоянна и не зависит от состояния: отступы + иллюстрация + место
+      под заголовок в четыре строки. Описание в расчёт не входит — оно раскрывается внутри.
     */
     .card {
+      position: relative;
+      height: calc(3 * var(--space-xl) + 156px + 4 * var(--line-height-h4));
       overflow: clip;
     }
 
-    .caption-text {
+    /* Более длинный заголовок обрезается, а не наезжает на иллюстрацию. */
+    .title {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 4;
+      overflow: hidden;
+    }
+
+    /*
+      Текстовый блок закреплён по нижнему краю, поэтому при раскрытии описания он растёт
+      вверх — заголовок поднимается, а не уезжает за границу карточки.
+    */
+    .info {
+      position: absolute;
+      inset: auto var(--space-xl) var(--space-xl);
+    }
+
+    /*
+      При наведении текст поднимается на место иллюстрации, поэтому она уходит —
+      иначе длинный заголовок наезжал бы на неё.
+    */
+    .icon {
+      transition: opacity 200ms ease;
+    }
+
+    .card:hover .icon,
+    .card:focus-within .icon {
       opacity: 0;
-      transform: translateY(1rem);
-      transition:
-        opacity 200ms ease,
-        transform 320ms cubic-bezier(0.22, 0.8, 0.36, 1);
+    }
+
+    .caption {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 320ms cubic-bezier(0.22, 0.8, 0.36, 1);
+    }
+
+    .caption-text {
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 200ms ease;
+    }
+
+    .card:hover .caption,
+    .card:focus-within .caption {
+      grid-template-rows: 1fr;
     }
 
     .card:hover .caption-text,
     .card:focus-within .caption-text {
       opacity: 1;
-      transform: translateY(0);
+      transition-delay: 80ms;
     }
   }
 
