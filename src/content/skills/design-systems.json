@@ -1,0 +1,6 @@
+{
+  "title": "Design systems as infrastructure",
+  "icon": "/images/skills/design-systems.svg",
+  "description": "A library nobody maintains becomes a slower way to design. I treat the system as infrastructure: versioned, documented, adopted, and audited against production.",
+  "order": 3
+}

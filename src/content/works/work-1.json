@@ -1,0 +1,50 @@
+{
+  "title": "Bir Ecosystem design system",
+  "shortDescription": "Short description — replace with the real case summary.",
+  "categoryTags": [
+    "product-identity",
+    "interfaces"
+  ],
+  "cardSize": "wide",
+  "showOnHome": true,
+  "heroImage": "/images/works/work-1.svg",
+  "order": 0,
+  "process": null,
+  "galleryBlocks": [
+    {
+      "type": "split-2",
+      "images": [
+        {
+          "src": "/images/works/work-1-gallery-a.svg",
+          "alt": ""
+        },
+        {
+          "src": "/images/works/work-1-gallery-b.svg",
+          "alt": ""
+        }
+      ]
+    },
+    {
+      "type": "full",
+      "images": [
+        {
+          "src": "/images/works/work-1.svg",
+          "alt": "Bir Ecosystem design system"
+        }
+      ]
+    },
+    {
+      "type": "split-2",
+      "images": [
+        {
+          "src": "/images/works/work-1-gallery-a.svg",
+          "alt": ""
+        },
+        {
+          "src": "/images/works/work-1-gallery-b.svg",
+          "alt": ""
+        }
+      ]
+    }
+  ]
+}

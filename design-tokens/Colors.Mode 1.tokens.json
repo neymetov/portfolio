@@ -1,0 +1,12 @@
+{
+  "Neutral_50": { "$type": "color", "$value": "#fafafa" },
+  "Neutral_100": { "$type": "color", "$value": "#f5f5f5" },
+  "Neutral_200": { "$type": "color", "$value": "#e5e5e5" },
+  "Neutral_300": { "$type": "color", "$value": "#d6d3d1" },
+  "Neutral_400": { "$type": "color", "$value": "#a3a3a3" },
+  "Neutral_500": { "$type": "color", "$value": "#737373" },
+  "Neutral_600": { "$type": "color", "$value": "#525252" },
+  "Neutral_700": { "$type": "color", "$value": "#404040" },
+  "Neutral_800": { "$type": "color", "$value": "#262626" },
+  "Neutral_900": { "$type": "color", "$value": "#171717" }
+}

@@ -1,0 +1,111 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/Base.astro';
+import FeaturedWork from '../../components/FeaturedWork.astro';
+import GalleryBlock from '../../components/GalleryBlock.astro';
+import WorkCard from '../../components/WorkCard.astro';
+
+// Шаблон проекта (фрейм `work`, 527:2005):
+//   главное изображение с панелью названия и описания — тот же компонент, что на /works;
+//   галерея из блоков, порядок и состав которых задаёт редактор;
+//   ряд других работ внизу;
+//   общий футер.
+export const getStaticPaths: GetStaticPaths = async () => {
+  const works = await getCollection('works');
+  return works.map((work) => ({ params: { slug: work.id }, props: { work } }));
+};
+
+const { work } = Astro.props;
+const { title, shortDescription, galleryBlocks } = work.data;
+
+const page = (await getEntry('worksPage', 'works'))!.data;
+
+// В ряду внизу — другие работы в их порядке сортировки; текущая исключена.
+const relatedWorks = (await getCollection('works'))
+  .filter((item) => item.id !== work.id)
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 4);
+---
+
+<Base title={`${title} — Elshan Neymatov`} description={shortDescription}>
+  <article>
+    <section class="hero-block">
+      <FeaturedWork work={work} heading="h1" />
+    </section>
+
+    <!-- Состав и порядок блоков задаёт редактор в CMS; вёрстка не знает их числа. -->
+    {
+      galleryBlocks.length > 0 && (
+        <section class="gallery">
+          {galleryBlocks.map((block) => (
+            <GalleryBlock block={block} />
+          ))}
+        </section>
+      )
+    }
+
+    {
+      relatedWorks.length > 0 && (
+        <section class="related">
+          <div class="related-header">
+            <h2 class="t-h5">{page.relatedTitle}</h2>
+          </div>
+          <ul class="hscroll row">
+            {relatedWorks.map((item) => (
+              <li>
+                <WorkCard work={item} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+  </article>
+</Base>
+
+<style>
+  /* Главное изображение и галерея живут в одной колонке контента с полями --space-margin. */
+  .hero-block,
+  .gallery {
+    padding: var(--space-m) var(--space-margin);
+  }
+
+  .related {
+    padding: var(--space-l) var(--space-margin);
+  }
+
+  .related-header {
+    padding: var(--space-m) 0;
+  }
+
+  /*
+    Ряд других работ: карточки 302 на десктопе и 164 на мобильном, зазор 16/24.
+    На мобильном ряд уходит под правую кромку и листается, на десктопе центрируется.
+  */
+  .row {
+    --card-width: var(--bento-w-s);
+    --row-gap: var(--space-l);
+    padding: var(--space-s) 0;
+    margin-right: calc(-1 * var(--space-margin));
+  }
+
+  .row::after {
+    content: '';
+    flex: none;
+    width: var(--space-margin);
+    margin-left: calc(-1 * var(--row-gap));
+  }
+
+  @media (min-width: 1024px) {
+    /* Ряд других работ выравнивается по левому краю контента, а не по центру. */
+    .row {
+      justify-content: flex-start;
+      margin-right: 0;
+    }
+
+    .row::after {
+      display: none;
+    }
+  }
+</style>

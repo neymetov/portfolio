@@ -1,0 +1,178 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import SectionHeader from './SectionHeader.astro';
+import WorkCard from './WorkCard.astro';
+
+// last-works-section из фреймов 540:2438 (desktop) и 540:2548 (mobile).
+//
+// desktop — секция залипает вместе с заголовком, а ряд карточек едет влево по мере
+//           вертикального скролла страницы. Сделано на scroll-driven анимации (view-timeline),
+//           без JS; где браузер её не поддерживает, ряд остаётся обычным горизонтальным скроллом.
+// mobile  — обычный вертикальный список карточек, как в макете.
+//
+// Длина горизонтального хода считается в CSS из числа карточек и ширины карточки
+// (--bento-w-l: 628 на десктопе, 343 на мобильном), поэтому N карточек — любое.
+interface Props {
+  title: string;
+  note?: string;
+  buttonLabel: string;
+  works: CollectionEntry<'works'>[];
+}
+
+const { title, note, buttonLabel, works } = Astro.props;
+---
+
+<section class="last-works" style={`--cards: ${works.length}`}>
+  <div class="track">
+    <div class="pin">
+      <SectionHeader title={title} note={note} buttonHref="/works" buttonLabel={buttonLabel} />
+
+      <div class="viewport">
+        <ul class="row">
+          {
+            works.map((work) => (
+              <li class="cell">
+                <WorkCard work={work} />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .last-works {
+    /* Ширина карточки и зазор — из токенов; ряд и ход прокрутки считаются от них. */
+    --card-w: var(--bento-w-l);
+    --gap: var(--space-l);
+    /*
+      Всё, что в залипшей секции занимает высоту помимо самой картинки карточки:
+      вертикальные отступы секции, заголовок, зазор до ряда и подписи под картинкой.
+      Нужно, чтобы карточка никогда не выпирала за экран (см. --card-w ниже).
+    */
+    --chrome-h: calc(
+      2 * var(--space-xl) + var(--line-height-h1) + var(--space-xl) + var(--space-l) +
+        var(--line-height-h5) + var(--line-height-p2)
+    );
+    --row-w: calc(var(--cards) * var(--card-w) + (var(--cards) - 1) * var(--gap));
+    /* Видимая ширина ряда = вьюпорт минус поля секции. */
+    --visible-w: calc(100vw - 2 * var(--space-margin));
+    /* Сколько ряду нужно проехать, чтобы показать последнюю карточку. */
+    --travel: max(0px, calc(var(--row-w) - var(--visible-w)));
+  }
+
+  .pin {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    padding: var(--space-xl) var(--space-margin);
+  }
+
+  .viewport {
+    /* Ряд шире экрана: на мобильном он просто переносится в колонку (см. ниже). */
+    display: flex;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap);
+    width: 100%;
+  }
+
+  .cell {
+    min-width: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .row {
+      flex-direction: row;
+      width: max-content;
+    }
+
+    .cell {
+      width: var(--card-w);
+      flex: none;
+    }
+
+    /*
+      Без scroll-driven анимаций ряд остаётся листаемым по горизонтали —
+      содержимое доступно, просто без привязки к скроллу страницы.
+    */
+    .viewport {
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .viewport::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  /*
+    Пин + горизонтальный проезд. Трек выше экрана ровно на длину хода: пока он полностью
+    накрывает вьюпорт, секция залипает, а ряд едет влево. Диапазон contain как раз равен
+    этому периоду, поэтому проезд заканчивается ровно в момент открепления.
+  */
+  @supports (animation-timeline: view()) {
+    @media (min-width: 1024px) {
+      /*
+        В залипшем состоянии секция должна влезать в экран целиком, поэтому карточка
+        не больше доступной высоты. На высоких экранах упирается в 628 из макета.
+      */
+      .last-works {
+        --card-w: min(var(--bento-w-l), calc(100vh - var(--chrome-h)));
+      }
+
+      .track {
+        height: calc(100vh + var(--travel));
+        view-timeline: --last-works block;
+      }
+
+      .pin {
+        position: sticky;
+        top: 0;
+      }
+
+      .viewport {
+        overflow: clip;
+      }
+
+      .row {
+        animation: slide-row linear both;
+        animation-timeline: --last-works;
+        animation-range: contain 0% contain 100%;
+      }
+
+      @keyframes slide-row {
+        to {
+          transform: translateX(calc(-1 * var(--travel)));
+        }
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .track {
+      height: auto;
+    }
+
+    .row {
+      animation: none;
+    }
+
+    .viewport {
+      overflow-x: auto;
+    }
+  }
+
+  /* Кнопка «All works» на мобильном занимает всю ширину и выше, чем в hero (64 из макета). */
+  @media (max-width: 1023px) {
+    .pin :global(.btn) {
+      width: 100%;
+      height: 64px;
+    }
+  }
+</style>

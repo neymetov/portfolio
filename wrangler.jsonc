@@ -1,0 +1,9 @@
+{
+  // Конфигурация Cloudflare Pages. Сервером ничего не считается: в dist/ лежат готовые html,
+  // поэтому нужен только каталог со собранной статикой.
+  // Автосборка из репозитория настраивается в панели Pages (build: npm run build, output: dist).
+  // Локальная проверка того же артефакта: npx wrangler pages deploy
+  "name": "elshan-neymatov-site",
+  "compatibility_date": "2026-07-27",
+  "pages_build_output_dir": "./dist"
+}

@@ -1,0 +1,97 @@
+{
+  "heroCv": {
+    "title": "Design works when one person owns it — from brand to product.",
+    "titleAccent": "I am that role.",
+    "body": "Started on the brand side — identity, guidelines, brand presence on social media (Paradox).\n\nThen joined PASHA Bank as its first designer — a first experience in banking and the corporate world — and built a design team around that role, growing into a Senior position.\n\nAt Guavapay, led a team focused on product: interfaces, design systems.\n\nNow at Bir Ecosystem, heads the graphic and web design function — all design output runs through one owner: web, design systems, mobile apps.\n\nOver 8 years, completed the full loop of a company's design — not choosing between brand and product, but going through both and now leading both.",
+    "moreLabel": "More +",
+    "lessLabel": "Close +",
+    "education": [
+      {
+        "logo": "/images/education/aacu.png",
+        "name": "Azerbaijan Architecture and Construction University",
+        "dates": "2013–2017",
+        "program": "Graphic & Interior Designer"
+      },
+      {
+        "logo": "/images/education/bhsad.png",
+        "name": "British higher school of art & design at Moscow, Russia",
+        "dates": "2019",
+        "program": "Visual Communications"
+      },
+      {
+        "logo": "/images/education/skvot.png",
+        "name": "SKVOT — POP CULTURE SCHOOL",
+        "dates": "2021",
+        "program": "Art Direction"
+      }
+    ],
+    "experience": [
+      {
+        "logo": "/images/experience/bir.png",
+        "company": "Bir ecosystem",
+        "dates": "2025–2026",
+        "role": "Design Team Chapter Lead"
+      },
+      {
+        "logo": "/images/experience/guavapay.png",
+        "company": "Guavapay",
+        "dates": "2023–2025",
+        "role": "Design Team Lead"
+      },
+      {
+        "logo": "/images/experience/pasha.png",
+        "company": "PASHA Bank OJSC",
+        "dates": "2020–2023",
+        "role": "Senior Graphic Designer"
+      },
+      {
+        "logo": "/images/experience/paradox.png",
+        "company": "Paradox Branding Studio",
+        "dates": "2017–2020",
+        "role": "Graphic Designer"
+      },
+      {
+        "logo": "/images/experience/shamans.png",
+        "company": "Creative SHAMANS Bureau",
+        "dates": "2017",
+        "role": "Graphic Designer"
+      }
+    ],
+    "educationTitle": "Education",
+    "experienceTitle": "Experience",
+    "languagesTitle": "What languages do I speak and work in?",
+    "languages": [
+      {
+        "flag": "/images/flags/azerbaijani.svg",
+        "name": "Azerbaijani"
+      },
+      {
+        "flag": "/images/flags/russian.svg",
+        "name": "Russian"
+      },
+      {
+        "flag": "/images/flags/english.svg",
+        "name": "English"
+      }
+    ]
+  },
+  "heroImage": {
+    "src": "/images/hero/cv-image.png",
+    "alt": "Elshan Neymatov"
+  },
+  "skillSectionTitle": "What can I do",
+  "skillCards": [
+    "design-function",
+    "brand-and-product",
+    "whole-design-loop",
+    "design-systems",
+    "team-and-quality",
+    "craft",
+    "ai-automation"
+  ],
+  "lastWorks": {
+    "title": "Last projects",
+    "year": "2026",
+    "buttonLabel": "All works"
+  }
+}

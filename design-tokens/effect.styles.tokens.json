@@ -1,0 +1,9 @@
+{
+  "blue_folder_shadow": {
+    "$type": "shadow",
+    "$description": "for blue folders",
+    "$value": [
+      { "offsetX": "0px", "offsetY": "12px", "blur": "25.1px", "spread": "0px", "color": "#61b2ff" }
+    ]
+  }
+}

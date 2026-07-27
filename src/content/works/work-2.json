@@ -1,0 +1,36 @@
+{
+  "title": "Guavapay product identity",
+  "shortDescription": "Short description — replace with the real case summary.",
+  "categoryTags": [
+    "product-identity"
+  ],
+  "cardSize": "split",
+  "showOnHome": true,
+  "heroImage": "/images/works/work-2.svg",
+  "order": 1,
+  "process": null,
+  "galleryBlocks": [
+    {
+      "type": "full",
+      "images": [
+        {
+          "src": "/images/works/work-2.svg",
+          "alt": "Guavapay product identity"
+        }
+      ]
+    },
+    {
+      "type": "split-2",
+      "images": [
+        {
+          "src": "/images/works/work-2-gallery-a.svg",
+          "alt": ""
+        },
+        {
+          "src": "/images/works/work-2-gallery-b.svg",
+          "alt": ""
+        }
+      ]
+    }
+  ]
+}

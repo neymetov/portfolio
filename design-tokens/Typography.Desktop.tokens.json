@@ -1,0 +1,34 @@
+{
+  "FontSize": {
+    "Heading": {
+      "H1": { "$type": "dimension", "$value": "100px" },
+      "H2": { "$type": "dimension", "$value": "80px" },
+      "H3": { "$type": "dimension", "$value": "64px" },
+      "H4": { "$type": "dimension", "$value": "48px" },
+      "H5": { "$type": "dimension", "$value": "32px" }
+    },
+    "Paragraph": {
+      "P1": { "$type": "dimension", "$value": "24px" },
+      "P2": { "$type": "dimension", "$value": "20px" },
+      "P3": { "$type": "dimension", "$value": "16px" },
+      "P4": { "$type": "dimension", "$value": "12px" },
+      "P5": { "$type": "dimension", "$value": "10px" }
+    }
+  },
+  "LineHeight": {
+    "Heading": {
+      "H1": { "$type": "dimension", "$value": "106px" },
+      "H2": { "$type": "dimension", "$value": "83px" },
+      "H3": { "$type": "dimension", "$value": "68px" },
+      "H4": { "$type": "dimension", "$value": "52px" },
+      "H5": { "$type": "dimension", "$value": "36px" }
+    },
+    "Paragraph": {
+      "P1": { "$type": "dimension", "$value": "28px" },
+      "P2": { "$type": "dimension", "$value": "24px" },
+      "P3": { "$type": "dimension", "$value": "20px" },
+      "P4": { "$type": "dimension", "$value": "16px" },
+      "P5": { "$type": "dimension", "$value": "12px" }
+    }
+  }
+}

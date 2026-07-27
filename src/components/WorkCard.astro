@@ -1,0 +1,43 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+// Карточка работы из фреймов `all works` и `Home`: квадратная картинка, под ней название (h5)
+// и короткое описание (p2). Зазор между картинкой и подписью — space-l (16 моб / 24 десктоп).
+// Ширину карточки задаёт ряд-родитель через --card-width, поэтому одна и та же карточка
+// работает и в ряду мелких (302/164), и в парном блоке (628/343).
+interface Props {
+  work: CollectionEntry<'works'>;
+}
+
+const { work } = Astro.props;
+const { title, shortDescription, heroImage } = work.data;
+---
+
+<a class="work" href={`/work/${work.id}`}>
+  <img class="media ratio-square" src={heroImage} alt={title} loading="lazy" />
+  <div class="info">
+    <p class="t-h5 title">{title}</p>
+    {shortDescription && <p class="t-p2 caption">{shortDescription}</p>}
+  </div>
+</a>
+
+<style>
+  .work {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-l);
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .title {
+    color: var(--color-neutral-800);
+  }
+
+  .caption {
+    color: var(--color-neutral-500);
+  }
+</style>

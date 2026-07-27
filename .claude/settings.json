@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd /private/tmp/claude-501/-Users-neymetov-Desktop-portfolio-website/09c77af8-d64e-465f-9f24-c724ed42fa22/scratchpad && rm -rf site && npm create astro@latest site -- --template minimal --no-install --no-git --skip-houston --typescript strict 2>&1 | tail -20)"
+    ]
+  }
+}

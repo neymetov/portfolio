@@ -1,0 +1,45 @@
+{
+  "name": "Design Tokens",
+  "collections": {
+    "Spacing": {
+      "modes": {
+        "Desktop": ["Spacing.Desktop.tokens.json"],
+        "Mobile": ["Spacing.Mobile.tokens.json"]
+      }
+    },
+    "Bento Width": {
+      "modes": {
+        "Desktop": ["Bento Width.Desktop.tokens.json"],
+        "Mobile": ["Bento Width.Mobile.tokens.json"]
+      }
+    },
+    "Bento Height": {
+      "modes": {
+        "Desktop": ["Bento Height.Desktop.tokens.json"],
+        "Mobile": ["Bento Height.Mobile.tokens.json"]
+      }
+    },
+    "Typography": {
+      "modes": {
+        "Desktop": ["Typography.Desktop.tokens.json"],
+        "Mobile": ["Typography.Mobile.tokens.json"]
+      }
+    },
+    "Radius": {
+      "modes": {
+        "Desktop": ["Radius.Desktop.tokens.json"],
+        "Mobile": ["Radius.Mobile.tokens.json"]
+      }
+    },
+    "Colors": {
+      "modes": {
+        "Mode 1": ["Colors.Mode 1.tokens.json"]
+      }
+    }
+  },
+  "styles": {
+    "text": ["text.styles.tokens.json"],
+    "effect": ["effect.styles.tokens.json"],
+    "grid": ["grid.styles.tokens.json"]
+  }
+}

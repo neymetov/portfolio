@@ -1,0 +1,133 @@
+/* СГЕНЕРИРОВАНО scripts/build-tokens.mjs из design-tokens/. Не редактировать вручную. */
+:root {
+  /* Colors */
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e5e5e5;
+  --color-neutral-300: #d6d3d1;
+  --color-neutral-400: #a3a3a3;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #525252;
+  --color-neutral-700: #404040;
+  --color-neutral-800: #262626;
+  --color-neutral-900: #171717;
+
+  /* Spacing */
+  --space-0: 0;
+  --space-xxs: 2px;
+  --space-xs: 4px;
+  --space-s: 8px;
+  --space-m: 16px;
+  --space-l: 16px;
+  --space-x: 24px;
+  --space-xl: 32px;
+  --space-xxl: 48px;
+  --space-margin: 16px;
+  --space-top-margin: 64px;
+
+  /* Radius */
+  --radius-none: 0;
+  --radius-xs: 1px;
+  --radius-s: 2px;
+  --radius-m: 4px;
+  --radius-l: 8px;
+  --radius-xl: 12px;
+  --radius-xxl: 16px;
+  --radius-full: 999px;
+
+  /* Bento Width */
+  --bento-w-xs: 74px;
+  --bento-w-s: 164px;
+  --bento-w-m: 164px;
+  --bento-w-l: 343px;
+  --bento-w-xl: 343px;
+  --bento-w-xxl: 343px;
+  --bento-w-wide: 343px;
+  --bento-w-banner: 0;
+
+  /* Bento Height */
+  --bento-h-xs: 74px;
+  --bento-h-s: 164px;
+  --bento-h-m: 344px;
+  --bento-h-l: 164px;
+  --bento-h-xl: 343px;
+  --bento-h-xxl: 523px;
+  --bento-h-wide: 74px;
+  --bento-h-banner: 0;
+
+  /* Typography */
+  --font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-size-h1: clamp(54px, 37.80px + 4.3192vw, 100px);
+  --line-height-h1: clamp(60px, 43.80px + 4.3192vw, 106px);
+  --font-weight-h1: 700;
+  --font-size-h2: clamp(48px, 36.73px + 3.0047vw, 80px);
+  --line-height-h2: clamp(52px, 41.08px + 2.9108vw, 83px);
+  --font-weight-h2: 700;
+  --font-size-h3: clamp(36px, 26.14px + 2.6291vw, 64px);
+  --line-height-h3: clamp(40px, 30.14px + 2.6291vw, 68px);
+  --font-weight-h3: 700;
+  --font-size-h4: clamp(28px, 20.96px + 1.8779vw, 48px);
+  --line-height-h4: clamp(32px, 24.96px + 1.8779vw, 52px);
+  --font-weight-h4: 700;
+  --font-size-h5: clamp(20px, 15.77px + 1.1268vw, 32px);
+  --line-height-h5: clamp(24px, 19.77px + 1.1268vw, 36px);
+  --font-weight-h5: 700;
+  --font-size-p1: clamp(18px, 15.89px + 0.5634vw, 24px);
+  --line-height-p1: clamp(22px, 19.89px + 0.5634vw, 28px);
+  --font-weight-p1: 400;
+  --font-size-p2: clamp(16px, 14.59px + 0.3756vw, 20px);
+  --line-height-p2: clamp(20px, 18.59px + 0.3756vw, 24px);
+  --font-weight-p2: 400;
+  --font-size-p3: clamp(12px, 10.59px + 0.3756vw, 16px);
+  --line-height-p3: clamp(16px, 14.59px + 0.3756vw, 20px);
+  --font-weight-p3: 400;
+  --font-size-p4: clamp(10px, 9.30px + 0.1878vw, 12px);
+  --line-height-p4: clamp(12px, 10.59px + 0.3756vw, 16px);
+  --font-weight-p4: 400;
+  --font-size-p5: clamp(8px, 7.30px + 0.1878vw, 10px);
+  --line-height-p5: clamp(10px, 9.30px + 0.1878vw, 12px);
+  --font-weight-p5: 400;
+
+  /* Grid */
+  --grid-desktop-columns: 12;
+  --grid-desktop-gutter: 24px;
+  --grid-desktop-offset: 80px;
+  --grid-mobile-columns: 2;
+  --grid-mobile-gutter: 16px;
+  --grid-mobile-offset: 16px;
+
+  /* Effects */
+  --shadow-blue-folder-shadow: 0 12px 25.1px 0 #61b2ff;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --space-l: 24px;
+    --space-x: 32px;
+    --space-xl: 48px;
+    --space-xxl: 64px;
+    --space-margin: 80px;
+    --radius-xs: 2px;
+    --radius-s: 4px;
+    --radius-m: 8px;
+    --radius-l: 12px;
+    --radius-xl: 16px;
+    --radius-xxl: 20px;
+    --bento-w-xs: 139px;
+    --bento-w-s: 302px;
+    --bento-w-m: 302px;
+    --bento-w-l: 628px;
+    --bento-w-xl: 628px;
+    --bento-w-xxl: 628px;
+    --bento-w-wide: 1280px;
+    --bento-w-banner: 1280px;
+    --bento-h-xs: 139px;
+    --bento-h-s: 302px;
+    --bento-h-m: 628px;
+    --bento-h-l: 302px;
+    --bento-h-xl: 628px;
+    --bento-h-xxl: 954px;
+    --bento-h-wide: 139px;
+    --bento-h-banner: 628px;
+  }
+}

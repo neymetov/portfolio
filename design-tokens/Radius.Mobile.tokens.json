@@ -1,0 +1,10 @@
+{
+  "None": { "$type": "dimension", "$value": "0px" },
+  "XS": { "$type": "dimension", "$value": "1px" },
+  "S": { "$type": "dimension", "$value": "2px" },
+  "M": { "$type": "dimension", "$value": "4px" },
+  "L": { "$type": "dimension", "$value": "8px" },
+  "XL": { "$type": "dimension", "$value": "12px" },
+  "XXL": { "$type": "dimension", "$value": "16px" },
+  "Full": { "$type": "dimension", "$value": "999px" }
+}

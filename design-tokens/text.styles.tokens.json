@@ -1,0 +1,132 @@
+{
+  "H1": {
+    "$type": "typography",
+    "$description": "Header 1",
+    "$value": {
+      "fontFamily": "SF Pro Display",
+      "fontSize": "{FontSize.Heading.H1}",
+      "fontWeight": 700,
+      "letterSpacing": "0%",
+      "lineHeight": "{LineHeight.Heading.H1}",
+      "textTransform": "none",
+      "textDecoration": "none"
+    }
+  },
+  "H2": {
+    "$type": "typography",
+    "$description": "Header 2",
+    "$value": {
+      "fontFamily": "SF Pro Display",
+      "fontSize": "{FontSize.Heading.H2}",
+      "fontWeight": 700,
+      "letterSpacing": "0%",
+      "lineHeight": "{LineHeight.Heading.H2}",
+      "textTransform": "none",
+      "textDecoration": "none"
+    }
+  },
+  "H3": {
+    "$type": "typography",
+    "$description": "Header 3",
+    "$value": {
+      "fontFamily": "SF Pro Display",
+      "fontSize": "{FontSize.Heading.H3}",
+      "fontWeight": 700,
+      "letterSpacing": "0%",
+      "lineHeight": "{LineHeight.Heading.H3}",
+      "textTransform": "none",
+      "textDecoration": "none"
+    }
+  },
+  "H4": {
+    "$type": "typography",
+    "$description": "Header 4",
+    "$value": {
+      "fontFamily": "SF Pro Display",
+      "fontSize": "{FontSize.Heading.H4}",
+      "fontWeight": 700,
+      "letterSpacing": "0%",
+      "lineHeight": "{LineHeight.Heading.H4}",
+      "textTransform": "none",
+      "textDecoration": "none"
+    }
+  },
+  "H5": {
+    "$type": "typography",
+    "$description": "Header 5",
+    "$value": {
+      "fontFamily": "SF Pro Display",
+      "fontSize": "{FontSize.Heading.H5}",
+      "fontWeight": 700,
+      "letterSpacing": "0%",
+      "lineHeight": "{LineHeight.Heading.H5}",
+      "textTransform": "none",
+      "textDecoration": "none"
+    }
+  },
+  "P1": {
+    "$type": "typography",
+    "$description": "Paragraph 1",
+    "$value": {
+      "fontFamily": "SF Pro Display",
+      "fontSize": "{FontSize.Paragraph.P1}",
+      "fontWeight": 400,
+      "letterSpacing": "0%",
+      "lineHeight": "{LineHeight.Paragraph.P1}",
+      "textTransform": "none",
+      "textDecoration": "none"
+    }
+  },
+  "P2": {
+    "$type": "typography",
+    "$description": "Paragraph 2",
+    "$value": {
+      "fontFamily": "SF Pro Display",
+      "fontSize": "{FontSize.Paragraph.P2}",
+      "fontWeight": 400,
+      "letterSpacing": "0%",
+      "lineHeight": "{LineHeight.Paragraph.P2}",
+      "textTransform": "none",
+      "textDecoration": "none"
+    }
+  },
+  "P3": {
+    "$type": "typography",
+    "$description": "Paragraph 3",
+    "$value": {
+      "fontFamily": "SF Pro Display",
+      "fontSize": "{FontSize.Paragraph.P3}",
+      "fontWeight": 400,
+      "letterSpacing": "0%",
+      "lineHeight": "{LineHeight.Paragraph.P3}",
+      "textTransform": "none",
+      "textDecoration": "none"
+    }
+  },
+  "P4": {
+    "$type": "typography",
+    "$description": "Parahraph 4",
+    "$value": {
+      "fontFamily": "SF Pro Display",
+      "fontSize": "{FontSize.Paragraph.P4}",
+      "fontWeight": 400,
+      "letterSpacing": "0%",
+      "lineHeight": "{LineHeight.Paragraph.P4}",
+      "textTransform": "none",
+      "textDecoration": "none"
+    }
+  },
+  "P5": {
+    "$type": "typography",
+    "$description": "Paragraph 5",
+    "$value": {
+      "fontFamily": "SF Pro Display",
+      "fontSize": "{FontSize.Paragraph.P5}",
+      "fontWeight": 400,
+      "letterSpacing": "0%",
+      "lineHeight": "{LineHeight.Paragraph.P5}",
+      "textTransform": "none",
+      "textDecoration": "none"
+    }
+  }
+}

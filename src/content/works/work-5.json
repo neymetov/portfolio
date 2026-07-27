@@ -1,0 +1,36 @@
+{
+  "title": "Icon set",
+  "shortDescription": "Short description — replace with the real case summary.",
+  "categoryTags": [
+    "icons"
+  ],
+  "cardSize": "small",
+  "showOnHome": false,
+  "heroImage": "/images/works/work-5.svg",
+  "order": 4,
+  "process": null,
+  "galleryBlocks": [
+    {
+      "type": "full",
+      "images": [
+        {
+          "src": "/images/works/work-5.svg",
+          "alt": "Icon set"
+        }
+      ]
+    },
+    {
+      "type": "split-2",
+      "images": [
+        {
+          "src": "/images/works/work-5-gallery-a.svg",
+          "alt": ""
+        },
+        {
+          "src": "/images/works/work-5-gallery-b.svg",
+          "alt": ""
+        }
+      ]
+    }
+  ]
+}

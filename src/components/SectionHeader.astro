@@ -1,0 +1,45 @@
+---
+import Button from './Button.astro';
+
+// Заголовок секции: крупный тайтл, необязательная подпись-год и кнопка справа.
+interface Props {
+  title: string;
+  note?: string;
+  buttonHref?: string;
+  buttonLabel?: string;
+}
+
+const { title, note, buttonHref, buttonLabel } = Astro.props;
+---
+
+<div class="header">
+  <div class="title">
+    <h2 class="t-h1">{title}</h2>
+    {note && <span class="t-h5 dim">{note}</span>}
+  </div>
+  {buttonHref && buttonLabel && <Button href={buttonHref} label={buttonLabel} variant="secondary" />}
+</div>
+
+<style>
+  .header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-l);
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  /* Год стоит вплотную к заголовку и выровнен по его верхней строке (gap xs из макета). */
+  .title {
+    display: flex;
+    gap: var(--space-xs);
+    align-items: flex-start;
+  }
+
+  @media (min-width: 1024px) {
+    .header {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+</style>

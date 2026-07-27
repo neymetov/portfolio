@@ -1,0 +1,69 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+// Блок галереи проекта (work-duo-cards в макете). Тип задаёт раскладку:
+//   full    — одно изображение во всю ширину контента (1280×628 на десктопе, квадрат на мобильном);
+//   split-2 — два квадрата рядом (628 / 343);
+//   split-4 — четыре в ряд (302 / 164 — как ряд мелких карточек).
+// Раскладка не ломается, если редактор положил в блок больше или меньше изображений,
+// чем предполагает тип: лишние переносятся на новую строку.
+type Block = CollectionEntry<'works'>['data']['galleryBlocks'][number];
+
+interface Props {
+  block: Block;
+}
+
+const { block } = Astro.props;
+---
+
+<div class:list={['block', `type-${block.type}`]}>
+  {
+    block.images.map((image) => (
+      <figure class="cell">
+        <img class="media" src={image.src} alt={image.alt} loading="lazy" />
+      </figure>
+    ))
+  }
+</div>
+
+<style>
+  /* Вертикальные отступы блока — space-m (16 на обеих раскладках), зазор между картинками — space-l. */
+  .block {
+    display: grid;
+    gap: var(--space-l);
+    padding: var(--space-m) 0;
+  }
+
+  .cell {
+    margin: 0;
+  }
+
+  .media {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+  }
+
+  /* На мобильном все блоки — одна колонка, включая split-4. */
+  .type-split-4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: 1024px) {
+    .type-split-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .type-split-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    /*
+      Широкое изображение: 1280×628 из bento-токенов, а не квадрат. Высота задаётся напрямую —
+      в aspect-ratio токены подставить нельзя, там нужны безразмерные числа, а токены в px.
+    */
+    .type-full .media {
+      aspect-ratio: auto;
+      height: var(--bento-h-banner);
+    }
+  }
+</style>

@@ -1,0 +1,13 @@
+{
+  "0": { "$type": "dimension", "$value": "0px" },
+  "XXS": { "$type": "dimension", "$value": "2px" },
+  "XS": { "$type": "dimension", "$value": "4px" },
+  "S": { "$type": "dimension", "$value": "8px" },
+  "M": { "$type": "dimension", "$value": "16px" },
+  "L": { "$type": "dimension", "$value": "24px" },
+  "X": { "$type": "dimension", "$value": "32px" },
+  "XL": { "$type": "dimension", "$value": "48px" },
+  "XXL": { "$type": "dimension", "$value": "64px" },
+  "Margin": { "$type": "dimension", "$value": "80px" },
+  "Top_Margin": { "$type": "dimension", "$value": "64px" }
+}

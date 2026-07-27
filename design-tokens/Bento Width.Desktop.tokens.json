@@ -1,0 +1,10 @@
+{
+  "XS": { "$type": "dimension", "$value": "139px" },
+  "S": { "$type": "dimension", "$value": "302px" },
+  "M": { "$type": "dimension", "$value": "302px" },
+  "L": { "$type": "dimension", "$value": "628px" },
+  "XL": { "$type": "dimension", "$value": "628px" },
+  "XXL": { "$type": "dimension", "$value": "628px" },
+  "Wide": { "$type": "dimension", "$value": "1280px" },
+  "Banner": { "$type": "dimension", "$value": "1280px" }
+}

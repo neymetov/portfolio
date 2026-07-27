@@ -1,0 +1,34 @@
+---
+import { getEntry, getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import SkillSection from '../components/SkillSection.astro';
+import LastWorks from '../components/LastWorks.astro';
+
+const home = (await getEntry('home', 'home'))!.data;
+const site = (await getEntry('site', 'site'))!.data;
+
+// Порядок карточек и работ берётся из сингла — им управляет редактор в админке.
+const skills = await getCollection('skills');
+const skillCards = home.skillCards
+  .map((ref) => skills.find((skill) => skill.id === ref.id))
+  .filter((skill) => skill !== undefined);
+
+// В Last Projects попадают работы с галочкой «Показывать на главной», в порядке сортировки.
+const lastWorks = (await getCollection('works'))
+  .filter((work) => work.data.showOnHome)
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base title={site.title} description={site.description}>
+  <Hero cv={home.heroCv} image={home.heroImage} />
+
+  <SkillSection title={home.skillSectionTitle} cards={skillCards} />
+
+  <LastWorks
+    title={home.lastWorks.title}
+    note={home.lastWorks.year}
+    buttonLabel={home.lastWorks.buttonLabel}
+    works={lastWorks}
+  />
+</Base>

@@ -1,0 +1,299 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+// Hero из фреймов hero=desktop (537:436) и hero=mobile (537:607). Одна разметка, две раскладки:
+//
+// desktop — две колонки по 628: слева анкета, справа квадратное изображение, закреплённое sticky,
+//           пока левая колонка скроллится;
+// mobile  — изображение на всю ширину, поверх него снизу карточка. В свёрнутом виде (cv-short)
+//           видны только заголовок и кнопка «More +», по нажатию раскрывается до cv-full.
+//
+// Education / Experience / Languages внутри анкеты — горизонтальные скролл-ряды (.hscroll):
+// карточек может быть сколько угодно, ряд листается по X, вёрстка не ломается.
+interface Props {
+  cv: CollectionEntry<'home'>['data']['heroCv'];
+  image: CollectionEntry<'home'>['data']['heroImage'];
+}
+
+const { cv, image } = Astro.props;
+---
+
+<section class="hero" data-hero data-expanded="false">
+  <figure class="media-frame">
+    <img class="media" src={image.src} alt={image.alt} />
+  </figure>
+
+  <div class="cv">
+    <h1 class="t-h4 title">
+      <span class="muted">{cv.title}</span>
+      {cv.titleAccent && <span> {cv.titleAccent}</span>}
+    </h1>
+
+    <!-- Всё ниже заголовка на мобильном скрыто до раскрытия; на десктопе видно всегда. -->
+    <div class="details" data-hero-details>
+      <div class="details-inner">
+        <div class="t-p2 muted body">
+          {cv.body.split('\n\n').map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+
+        {
+          cv.education.length > 0 && (
+            <section class="block">
+              <h2 class="t-h5">{cv.educationTitle}</h2>
+              <ul class="hscroll">
+                {cv.education.map((school) => (
+                  <li class="card-inner item">
+                    <img class="logo" src={school.logo} alt={school.name} width="32" height="32" />
+                    <p class="t-p3 name">{school.name}</p>
+                    <p class="t-p4 dim">{school.dates}</p>
+                    <span class="tag">{school.program}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        {
+          cv.experience.length > 0 && (
+            <section class="block">
+              <h2 class="t-h5">{cv.experienceTitle}</h2>
+              <ul class="hscroll">
+                {cv.experience.map((job) => (
+                  <li class="card-inner item">
+                    <img class="logo" src={job.logo} alt={job.company} width="32" height="32" />
+                    <p class="t-p3 name">{job.company}</p>
+                    <p class="t-p4 dim">{job.dates}</p>
+                    <span class="tag">{job.role}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+
+        {
+          cv.languages.length > 0 && (
+            <section class="block">
+              <h2 class="t-h5">{cv.languagesTitle}</h2>
+              <ul class="hscroll">
+                {cv.languages.map((language) => (
+                  <li class="card-inner language">
+                    <img src={language.flag} alt="" width="32" height="32" />
+                    <span class="t-p2">{language.name}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )
+        }
+      </div>
+    </div>
+
+    <!-- Кнопка нужна только мобильной раскладке — на десктопе анкета всегда раскрыта. -->
+    <button class="btn btn-secondary toggle" type="button" aria-expanded="false" data-hero-toggle>
+      <span data-label-more>{cv.moreLabel}</span>
+      <span data-label-less hidden>{cv.lessLabel}</span>
+    </button>
+  </div>
+</section>
+
+<style>
+  /* Hero заезжает под навбар: на мобильном изображение занимает весь верх экрана. */
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: calc(-1 * var(--navbar-height));
+  }
+
+  /* Изображение на мобильном — квадрат во всю ширину без скругления, карточка наезжает снизу. */
+  .media-frame {
+    margin: 0;
+    aspect-ratio: 1 / 1;
+  }
+
+  .media-frame .media {
+    border-radius: 0;
+  }
+
+  .cv {
+    position: relative;
+    z-index: 1;
+    /* Обрезает скролл-ряды точно по своей границе, как overflow-clip у фрейма в макете. */
+    overflow: clip;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+    margin: -64px var(--space-margin) 0;
+    padding: var(--space-xl);
+    border-radius: var(--radius-xxl);
+    background: var(--color-neutral-100);
+  }
+
+  .title :global(.muted) {
+    color: var(--color-neutral-500);
+  }
+
+  /*
+    Раскрытие: grid-строка едет от 0fr к 1fr, поэтому высота анимируется без магических
+    max-height. Где переход 0fr→1fr не поддерживается, блок просто появляется мгновенно.
+  */
+  .details {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 320ms ease;
+  }
+
+  .details-inner {
+    /* Скрываем только по вертикали — этого требует анимация 0fr→1fr. По горизонтали
+       контент должен доходить до границы карточки, обрезает его уже сама карточка.
+       width/min-width обязательны: без них элемент раздувается до min-content скролл-рядов.
+       min-height: 0 — тоже обязателен: трек 0fr имеет автоминимум по содержимому, и без
+       обнуления свёрнутая анкета осталась бы раскрытой (overflow: clip, в отличие от hidden,
+       scroll-контейнер не создаёт и автоминимум сам не снимает). */
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    overflow-x: visible;
+    overflow-y: clip;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+  }
+
+  [data-expanded='true'] .details {
+    grid-template-rows: 1fr;
+  }
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--line-height-p2);
+  }
+
+  .block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+  }
+
+  /*
+    Ширина карточек в скролл-ряду — из макета: 211 на мобильном, 227 на десктопе.
+    Ряд вытянут до правой границы карточки (padding компенсирован отрицательным margin),
+    поэтому карточки обрезаются у края cv-full, а не у внутреннего отступа.
+  */
+  .hscroll {
+    --card-width: 211px;
+    margin-right: calc(-1 * var(--space-xl));
+  }
+
+  /*
+    Отступ в конце ряда — спейсером, а не padding-right: при box-sizing: border-box padding
+    вошёл бы в ширину контейнера и обрезал бы карточки на 48px раньше границы карточки.
+  */
+  .hscroll::after {
+    content: '';
+    flex: none;
+    width: var(--space-xl);
+    /* Гасим gap перед спейсером, чтобы он не добавлял ряду лишнюю ширину. */
+    margin-left: calc(-1 * var(--space-m));
+  }
+
+  .item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-s);
+    align-items: flex-start;
+    padding: var(--space-l);
+  }
+
+  .logo {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .name {
+    color: var(--color-neutral-800);
+  }
+
+  .language {
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+    width: auto;
+    padding: var(--space-m);
+    border-radius: var(--radius-full);
+  }
+
+  .toggle {
+    width: 100%;
+  }
+
+  @media (min-width: 1024px) {
+    /* На десктопе навбар остаётся в потоке над hero, как во фрейме hero=desktop. */
+    .hero {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-l);
+      margin-top: 0;
+      padding: var(--space-xl) var(--space-margin);
+      align-items: start;
+    }
+
+    .media-frame .media {
+      border-radius: var(--radius-xxl);
+    }
+
+    /* Изображение справа и закреплено, пока анкета слева прокручивается. */
+    .media-frame {
+      grid-column: 2;
+      grid-row: 1;
+      position: sticky;
+      top: var(--space-xl);
+    }
+
+    .cv {
+      grid-column: 1;
+      grid-row: 1;
+      margin: 0;
+      border: 0;
+    }
+
+    .hscroll {
+      --card-width: 227px;
+    }
+
+    /* Анкета на десктопе всегда раскрыта, кнопка не нужна. */
+    .details {
+      grid-template-rows: 1fr;
+    }
+
+    .toggle {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .details {
+      transition-duration: 0ms;
+    }
+  }
+</style>
+
+<script>
+  // Мобильное раскрытие анкеты: cv-short → cv-full.
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+  const toggle = hero?.querySelector<HTMLButtonElement>('[data-hero-toggle]');
+  const more = toggle?.querySelector<HTMLElement>('[data-label-more]');
+  const less = toggle?.querySelector<HTMLElement>('[data-label-less]');
+
+  if (hero && toggle && more && less) {
+    toggle.addEventListener('click', () => {
+      const expanded = hero.dataset.expanded !== 'true';
+      hero.dataset.expanded = String(expanded);
+      toggle.setAttribute('aria-expanded', String(expanded));
+      more.hidden = expanded;
+      less.hidden = !expanded;
+    });
+  }
+</script>

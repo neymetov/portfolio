@@ -1,0 +1,34 @@
+{
+  "items": [
+    {
+      "label": "Home Page",
+      "href": "/#what-i-can-do",
+      "icon": "cursor-05"
+    },
+    {
+      "label": "Works",
+      "href": "/works",
+      "icon": "box"
+    },
+    {
+      "label": "DM to me",
+      "href": "https://t.me/",
+      "icon": "inbox-02"
+    },
+    {
+      "label": "Instagram",
+      "href": "https://instagram.com/",
+      "icon": "instagram"
+    },
+    {
+      "label": "Telegram Channel",
+      "href": "https://t.me/",
+      "icon": "telegram"
+    },
+    {
+      "label": "Linkedin",
+      "href": "https://www.linkedin.com/",
+      "icon": "linkedin-02"
+    }
+  ]
+}

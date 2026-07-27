@@ -1,0 +1,36 @@
+{
+  "title": "Mobile app interfaces",
+  "shortDescription": "Short description — replace with the real case summary.",
+  "categoryTags": [
+    "interfaces"
+  ],
+  "cardSize": "small",
+  "showOnHome": true,
+  "heroImage": "/images/works/work-4.svg",
+  "order": 3,
+  "process": null,
+  "galleryBlocks": [
+    {
+      "type": "full",
+      "images": [
+        {
+          "src": "/images/works/work-4.svg",
+          "alt": "Packaging series"
+        }
+      ]
+    },
+    {
+      "type": "split-2",
+      "images": [
+        {
+          "src": "/images/works/work-4-gallery-a.svg",
+          "alt": ""
+        },
+        {
+          "src": "/images/works/work-4-gallery-b.svg",
+          "alt": ""
+        }
+      ]
+    }
+  ]
+}

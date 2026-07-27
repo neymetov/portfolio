@@ -1,0 +1,5 @@
+{
+  "title": "Design system",
+  "problem": "Components drift away from production.",
+  "action": "Runs the system as versioned infrastructure."
+}

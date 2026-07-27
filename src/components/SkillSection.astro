@@ -1,0 +1,148 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+// skill-section из фреймов 539:2023 (desktop) и 539:2290 (mobile).
+// Карточки намеренно не кликабельны: это описание роли, а не навигация.
+//
+// desktop — сетка 2×N из квадратных карточек 628; skill-caption скрыт и выезжает снизу
+//           при наведении на карточку;
+// mobile  — одна колонка, caption виден сразу, а карточки при скролле наплывают друг
+//           на друга: каждая липнет к верху с небольшим каскадом, следующая накрывает предыдущую.
+//
+// Оба поведения на CSS — скриптов здесь нет.
+interface Props {
+  title: string;
+  cards: CollectionEntry<'skills'>[];
+}
+
+const { title, cards } = Astro.props;
+---
+
+<section class="section skills" id="what-i-can-do">
+  <h2 class="t-h1">{title}</h2>
+
+  <ul class="list">
+    {
+      cards.map((skill, index) => (
+        <li class="card" style={`--i: ${index}`}>
+          <img class="icon" src={skill.data.icon} alt="" loading="lazy" />
+          <div class="info">
+            <h3 class="t-h4 title">{skill.data.title}</h3>
+            <div class="caption">
+              <p class="t-p2 caption-text">{skill.data.description}</p>
+            </div>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .skills {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-l);
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-xl);
+    padding: var(--space-xl);
+    border-radius: var(--radius-xxl);
+    background: var(--color-neutral-50);
+  }
+
+  .icon {
+    width: 156px;
+    height: 156px;
+    object-fit: contain;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+  }
+
+  .title {
+    color: var(--color-neutral-800);
+  }
+
+  .caption-text {
+    color: var(--color-neutral-500);
+  }
+
+  /*
+    Наплыв на мобильном: карточка липнет к верху экрана под навбаром, а следующая
+    проезжает поверх неё. Каскад по --i оставляет видимой кромку нижних карточек.
+    z-index по порядку не нужен — более поздний элемент и так рисуется выше.
+  */
+  @media (max-width: 1023px) {
+    .list {
+      gap: var(--space-l);
+    }
+
+    .card {
+      position: sticky;
+      top: calc(var(--space-xl) + var(--i) * var(--space-s));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    /* Квадрат 628×628 из макета. */
+    .card {
+      aspect-ratio: 1 / 1;
+    }
+
+    /*
+      Скрытый caption: строка грида едет от 0fr к 1fr (высота считается по контенту),
+      а сам текст выезжает снизу. Заголовок при этом плавно поднимается.
+    */
+    .caption {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 320ms cubic-bezier(0.22, 0.8, 0.36, 1);
+    }
+
+    .caption-text {
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(1rem);
+      transition:
+        opacity 200ms ease,
+        transform 320ms cubic-bezier(0.22, 0.8, 0.36, 1);
+    }
+
+    .card:hover .caption,
+    .card:focus-within .caption {
+      grid-template-rows: 1fr;
+    }
+
+    .card:hover .caption-text,
+    .card:focus-within .caption-text {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 60ms;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .caption,
+    .caption-text {
+      transition-duration: 0ms;
+    }
+  }
+</style>

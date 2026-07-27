@@ -1,0 +1,212 @@
+---
+import { getEntry } from 'astro:content';
+import { icons } from '../icons';
+
+// navbar из макета (фреймы navbar-static / navbar-active): одна кнопка-гамбургер справа,
+// по нажатию под ней раскрывается список пунктов-пилюль. Пункты приходят из CMS.
+// Меню выпадает поверх контента (position: absolute), поэтому страница при открытии не дёргается.
+const nav = (await getEntry('navigation', 'navigation'))!.data;
+const Menu = icons['menu-05'];
+const Close = icons['x-02'];
+const isExternal = (href: string) => /^https?:\/\//.test(href);
+---
+
+<header class="navbar">
+  <div class="menu" data-menu data-open="false">
+    <button
+      class="button-icon"
+      type="button"
+      aria-expanded="false"
+      aria-controls="menu-items"
+      aria-label="Menu"
+      data-menu-toggle
+    >
+      <Menu class="icon open-icon" aria-hidden="true" />
+      <Close class="icon close-icon" aria-hidden="true" />
+    </button>
+
+    <ul class="items" id="menu-items" inert>
+      {
+        nav.items.map(({ label, href, icon }, index) => {
+          const Icon = icons[icon];
+          return (
+            <li style={`--i: ${index}`}>
+              <a
+                class="item t-p2"
+                href={href}
+                rel={isExternal(href) ? 'noopener noreferrer' : undefined}
+                target={isExternal(href) ? '_blank' : undefined}
+              >
+                <Icon class="icon" aria-hidden="true" />
+                <span>{label}</span>
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</header>
+
+<style>
+  /* Отступы навбара: сверху top-margin (64), снизу l, по краям margin — как в макете. */
+  .navbar {
+    /* Лежит поверх контента: на мобильном hero заезжает под навбар. */
+    position: relative;
+    z-index: 30;
+    display: flex;
+    justify-content: flex-end;
+    height: var(--navbar-height);
+    padding: var(--space-top-margin) var(--space-margin) var(--space-l);
+  }
+
+  .menu {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--space-s);
+
+    /* Кнопка одинаковая на всех ширинах: круг 64 с иконкой 24 внутри. */
+    --button-size: 64px;
+    /* Шаг раскладки пунктов: высота пилюли + gap. Из него же считается сдвиг анимации. */
+    --item-step: calc(64px + var(--space-s));
+  }
+
+  .button-icon {
+    /* Кнопка лежит выше списка, чтобы пункты выезжали именно из-под неё. */
+    position: relative;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Круг на всех ширинах: 48 на мобильном, 64 на десктопе. Padding не нужен —
+       иначе он съедает контент-бокс и иконка не может вырасти. */
+    width: var(--button-size);
+    height: var(--button-size);
+    padding: 0;
+    border: 1px solid var(--color-neutral-700);
+    border-radius: var(--radius-full);
+    background: var(--color-neutral-900);
+    color: var(--color-neutral-300);
+    cursor: pointer;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+    flex: none;
+  }
+
+
+  /* В закрытом состоянии видна иконка меню, в открытом — крестик. */
+  .close-icon,
+  [aria-expanded='true'] .open-icon {
+    display: none;
+  }
+
+  [aria-expanded='true'] .close-icon {
+    display: block;
+  }
+
+  .items {
+    position: absolute;
+    top: calc(var(--button-size) + var(--space-s));
+    right: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--space-s);
+  }
+
+  /*
+    Пункты стартуют спрятанными ровно под кнопкой (каждый сдвинут вверх на своё место
+    в списке) и по очереди выезжают вниз — как будто выпрыгивают из-за кнопки меню.
+    Список остаётся в DOM ради обратной анимации, а недоступным его делает inert.
+  */
+  .items li {
+    transform: translateY(calc(-1 * (var(--i) + 1) * var(--item-step))) scale(0.9);
+    opacity: 0;
+    transition:
+      transform 260ms cubic-bezier(0.22, 1.2, 0.36, 1),
+      opacity 160ms ease;
+    /* При закрытии первым уезжает нижний пункт. */
+    transition-delay: calc((var(--items-count, 6) - var(--i) - 1) * 30ms);
+  }
+
+  [data-open='true'] .items li {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    transition-delay: calc(var(--i) * 45ms);
+  }
+
+  .items[inert] {
+    pointer-events: none;
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+    height: 64px;
+    padding: 0 var(--space-l);
+    border-radius: var(--radius-full);
+    background: var(--color-neutral-50);
+    color: var(--color-neutral-800);
+    white-space: nowrap;
+    filter: drop-shadow(0 12px 16px rgb(214 211 209 / 0.5));
+    transition: transform 140ms ease;
+  }
+
+  /* Легкий подхват пилюли под курсором; масштаб от правого края — список выровнен по нему. */
+  .item:hover,
+  .item:focus-visible {
+    transform: scale(1.04);
+    transform-origin: right center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .items li,
+    .item {
+      transition-duration: 0ms;
+      transition-delay: 0ms;
+    }
+
+    .item:hover,
+    .item:focus-visible {
+      transform: none;
+    }
+  }
+
+</style>
+
+<script>
+  // Минимальный обработчик: открыть/закрыть, Esc, клик вне меню. React здесь не нужен.
+  const menu = document.querySelector<HTMLElement>('[data-menu]');
+  const toggle = menu?.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const items = menu?.querySelector<HTMLElement>('#menu-items');
+
+  if (menu && toggle && items) {
+    // Число пунктов нужно CSS, чтобы развернуть порядок задержек при закрытии.
+    items.style.setProperty('--items-count', String(items.children.length));
+
+    const setOpen = (open: boolean) => {
+      menu.dataset.open = String(open);
+      toggle.setAttribute('aria-expanded', String(open));
+      items.inert = !open;
+    };
+
+    toggle.addEventListener('click', () => {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setOpen(false);
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!menu.contains(event.target as Node)) setOpen(false);
+    });
+  }
+</script>

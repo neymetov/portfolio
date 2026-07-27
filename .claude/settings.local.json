@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git init *)",
+      "Bash(npm i *)",
+      "Bash(npm pkg *)",
+      "Bash(node scripts/build-tokens.mjs)",
+      "mcp__figma__get_metadata",
+      "mcp__figma__get_design_context",
+      "Bash(node scripts/make-placeholders.mjs)",
+      "Bash(grep -o 'astro-island[^>]\\\\{0,60\\\\}' dist/client/works/index.html)",
+      "Bash(npx astro *)",
+      "mcp__figma__get_screenshot",
+      "Bash(cd \"/Users/neymetov/Desktop/portfolio website\" && mkdir -p src/icons/raw && mv src/icons/*.svg src/icons/raw/ && ls src/icons/raw)",
+      "Bash(node scripts/normalize-icons.mjs)"
+    ],
+    "additionalDirectories": [
+      "/Users/neymetov/Desktop/portfolio website/src/icons"
+    ]
+  }
+}

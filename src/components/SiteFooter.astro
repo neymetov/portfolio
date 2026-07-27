@@ -1,0 +1,69 @@
+---
+import { getEntry } from 'astro:content';
+import Button from './Button.astro';
+
+// footer-section из макета: карточка на всю ширину с фоновым изображением,
+// заголовок + подпись сверху, CTA прижат к низу. Высота 302 на десктопе.
+// Компонент общий для всех страниц и ничего не знает про работы — блог переиспользует его как есть.
+const entry = await getEntry('siteFooter', 'footer');
+const footer = entry?.data;
+---
+
+{
+  footer && (
+    <footer class="section">
+      <div class="banner">
+        <img class="bg" src={footer.backgroundImage} alt="" />
+        <div class="info">
+          <h2 class="t-h4">{footer.title}</h2>
+          {footer.caption && <p class="t-p2 caption">{footer.caption}</p>}
+        </div>
+        <Button href={footer.externalUrl} label={footer.buttonLabel} external />
+      </div>
+    </footer>
+  )
+}
+
+<style>
+  .banner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-xl);
+    overflow: hidden;
+    padding: var(--space-xl);
+    border-radius: var(--radius-xxl);
+  }
+
+  .bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .info,
+  .banner :global(.btn) {
+    position: relative;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-m);
+    width: 100%;
+  }
+
+  .caption {
+    color: var(--color-neutral-700);
+  }
+
+  @media (min-width: 1024px) {
+    .banner {
+      min-height: 302px;
+    }
+  }
+</style>

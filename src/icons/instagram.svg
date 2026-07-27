@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none">
+  <g transform="translate(1.75 1.75) translate(0 20.5) scale(1 -1)">
+    <g id="elements">
+    <path id="Vector" d="M0.75 10.25C0.75 14.7283 0.75 16.9675 2.14124 18.3588C3.53249 19.75 5.77166 19.75 10.25 19.75C14.7283 19.75 16.9675 19.75 18.3588 18.3588C19.75 16.9675 19.75 14.7283 19.75 10.25C19.75 5.77166 19.75 3.53249 18.3588 2.14124C16.9675 0.750001 14.7283 0.750001 10.25 0.750001C5.77166 0.750001 3.53249 0.750001 2.14124 2.14124C0.75 3.53249 0.75 5.77166 0.75 10.25Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+    <path id="Ellipse 1794" d="M14.75 10.25C14.75 7.76472 12.7353 5.75 10.25 5.75C7.76472 5.75 5.75 7.76472 5.75 10.25C5.75 12.7353 7.76472 14.75 10.25 14.75C12.7353 14.75 14.75 12.7353 14.75 10.25Z" stroke="currentColor" stroke-width="1.5"/>
+    <path id="Vector_2" d="M15.7578 15.75L15.7488 15.75" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
+</svg>

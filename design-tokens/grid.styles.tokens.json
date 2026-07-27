@@ -1,0 +1,16 @@
+{
+  "Desktop": {
+    "$type": "grid",
+    "$description": "Standart Screens",
+    "$value": [
+      { "pattern": "columns", "visible": true, "alignment": "stretch", "color": "#a0cae41a", "gutterSize": "24px", "count": 12, "offset": "80px" }
+    ]
+  },
+  "Mobile": {
+    "$type": "grid",
+    "$description": "Mobile",
+    "$value": [
+      { "pattern": "columns", "visible": true, "alignment": "stretch", "color": "#a0cae41a", "gutterSize": "16px", "count": 2, "offset": "16px" }
+    ]
+  }
+}

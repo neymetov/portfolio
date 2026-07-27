@@ -1,0 +1,239 @@
+/* Токены (включая desktop-режим Spacing/Radius) целиком генерируются build-tokens.mjs. */
+@import './tokens.css';
+
+:root {
+  /* Высота навбара: отступ сверху + кнопка 64 + отступ снизу. Нужна секциям,
+     которые заезжают под навбар (мобильный hero). Держим в одном месте, чтобы не расходилась. */
+  --navbar-height: calc(var(--space-top-margin) + 64px + var(--space-l));
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  /* Фон страниц из макета — neutral-200; карточки (neutral-50 / neutral-100) светлее его. */
+  background: var(--color-neutral-200);
+  color: var(--color-neutral-800);
+  font-family: var(--font-family);
+  font-size: var(--font-size-p2);
+  line-height: var(--line-height-p2);
+}
+
+img,
+picture,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+figure {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+/* --- Типографика (роли из токенов) --------------------------------------- */
+.t-h1,
+.t-h2,
+.t-h3,
+.t-h4,
+.t-h5 {
+  font-weight: 700;
+}
+.t-h1 {
+  font-size: var(--font-size-h1);
+  line-height: var(--line-height-h1);
+}
+.t-h2 {
+  font-size: var(--font-size-h2);
+  line-height: var(--line-height-h2);
+}
+.t-h3 {
+  font-size: var(--font-size-h3);
+  line-height: var(--line-height-h3);
+}
+.t-h4 {
+  font-size: var(--font-size-h4);
+  line-height: var(--line-height-h4);
+}
+.t-h5 {
+  font-size: var(--font-size-h5);
+  line-height: var(--line-height-h5);
+}
+.t-p1 {
+  font-size: var(--font-size-p1);
+  line-height: var(--line-height-p1);
+}
+.t-p2 {
+  font-size: var(--font-size-p2);
+  line-height: var(--line-height-p2);
+}
+.t-p3 {
+  font-size: var(--font-size-p3);
+  line-height: var(--line-height-p3);
+}
+.t-p4 {
+  font-size: var(--font-size-p4);
+  line-height: var(--line-height-p4);
+}
+
+/* --- Раскладка ------------------------------------------------------------ */
+/* Секция = отступ по краям из --space-margin (16 моб / 80 десктоп из Figma). */
+.section {
+  padding: var(--space-xl) var(--space-margin);
+}
+
+/*
+  Основная сетка страниц: на десктопе две колонки по 628px (1280 − gap 24 пополам),
+  на мобильном — одна. Секции, которым нужно N карточек в ряд, задают --cols сами;
+  при любом N раскладка не ломается — лишние элементы переносятся на новый ряд.
+*/
+.grid {
+  display: grid;
+  gap: var(--space-l);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(var(--cols, 2), minmax(0, 1fr));
+  }
+}
+
+.card {
+  background: var(--color-neutral-100);
+  border-radius: var(--radius-xxl);
+  padding: var(--space-xl);
+}
+
+.card-inner {
+  background: var(--color-neutral-50);
+  border-radius: var(--radius-xxl);
+  padding: var(--space-l);
+}
+
+/* Кнопка из макета: h48 (64 на десктопе), padding l, radius xl. Два варианта заливки. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-s);
+  height: 48px;
+  padding: 0 var(--space-l);
+  border: 1px solid transparent;
+  border-radius: var(--radius-xl);
+  cursor: pointer;
+  font-size: var(--font-size-p2);
+  line-height: var(--line-height-p2);
+}
+
+.btn-primary {
+  background: var(--color-neutral-800);
+  color: var(--color-neutral-50);
+}
+
+.btn-secondary {
+  background: var(--color-neutral-900);
+  border-color: var(--color-neutral-700);
+  color: var(--color-neutral-300);
+}
+
+/* Плашка-тег: должность, специальность, рубрика. */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-s);
+  min-height: 24px;
+  padding: 0 var(--space-m);
+  border-radius: var(--radius-full);
+  background: var(--color-neutral-200);
+  font-size: var(--font-size-p4);
+  line-height: var(--line-height-p4);
+}
+
+.muted {
+  color: var(--color-neutral-500);
+}
+
+.dim {
+  color: var(--color-neutral-400);
+}
+
+/* Изображение, занимающее свой контейнер целиком, с сохранением кадра. */
+.media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-xxl);
+}
+
+.ratio-square {
+  aspect-ratio: 1 / 1;
+}
+
+/*
+  Горизонтальный скролл-ряд: карточки не сжимаются и не переносятся, ряд листается по X.
+  Ширина карточки задаётся через --card-width (211 на мобильном, 227 на десктопе — из макета).
+*/
+.hscroll {
+  display: flex;
+  /* Зазор зависит от ряда: в CV это space-m, в рядах работ — space-l. */
+  gap: var(--row-gap, var(--space-m));
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+
+.hscroll::-webkit-scrollbar {
+  display: none;
+}
+
+.hscroll > * {
+  flex: none;
+  scroll-snap-align: start;
+  width: var(--card-width, auto);
+}
+
+@media (min-width: 1024px) {
+  .btn {
+    height: 64px;
+  }
+
+  .tag {
+    min-height: 32px;
+  }
+}
+
+:where(a, button):focus-visible {
+  outline: 2px solid var(--color-neutral-800);
+  outline-offset: 2px;
+}
