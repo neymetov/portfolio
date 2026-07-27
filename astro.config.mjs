@@ -20,6 +20,13 @@ import keystatic from '@keystatic/astro';
 const withKeystatic = process.env.KEYSTATIC === '1';
 
 export default defineConfig({
+  /*
+    Минификатор lightningcss схлопывает animation + animation-timeline в короткую запись
+    («animation: linear both name --timeline»), которую браузеры не разбирают, и правило
+    отбрасывается целиком: scroll-driven анимации работали в dev и молча пропадали в проде.
+    esbuild такие шорткаты не собирает.
+  */
+  vite: { build: { cssMinify: 'esbuild' } },
   // Нужен для канонических ссылок, sitemap и абсолютных URL в мете.
   site: 'https://neymetov.com',
   output: 'static',
