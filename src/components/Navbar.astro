@@ -12,7 +12,7 @@ const Close = icons['x-02'];
 const isExternal = (href: string) => /^https?:\/\//.test(href);
 ---
 
-<header class="navbar">
+<header class="navbar" data-navbar>
   <a class="logo" href="/" aria-label="На главную">
     <Logo />
   </a>
@@ -55,10 +55,16 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
 
 <style>
   /* Отступы навбара: сверху top-margin (64), снизу l, по краям margin — как в макете. */
+  /*
+    Навбар закреплён поверх страницы и прячется при скролле вниз, возвращаясь при скролле
+    вверх. Место под него держит отступ у main (см. global.css), поэтому контент не прыгает,
+    когда навбар уезжает.
+  */
   .navbar {
-    /* Лежит поверх контента: на мобильном hero заезжает под навбар. */
-    position: relative;
+    position: fixed;
+    inset: 0 0 auto;
     z-index: 30;
+    transition: transform 260ms ease;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -75,6 +81,11 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
   .logo :global(svg) {
     width: auto;
     height: 64px;
+  }
+
+  /* Уехал вверх: скрыт при скролле вниз. */
+  .navbar[data-hidden='true'] {
+    transform: translateY(-100%);
   }
 
   .menu {
@@ -206,6 +217,7 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .navbar,
     .button-icon,
     .items li,
     .item {
@@ -226,6 +238,39 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
   const menu = document.querySelector<HTMLElement>('[data-menu]');
   const toggle = menu?.querySelector<HTMLButtonElement>('[data-menu-toggle]');
   const items = menu?.querySelector<HTMLElement>('#menu-items');
+
+  // Прятать навбар при движении вниз и возвращать при движении вверх.
+  const navbar = document.querySelector<HTMLElement>('[data-navbar]');
+
+  if (navbar) {
+    // Небольшой порог, чтобы дрожание тачпада не дёргало навбар.
+    const THRESHOLD = 6;
+    let lastY = window.scrollY;
+    let ticking = false;
+
+    const update = () => {
+      ticking = false;
+      const y = window.scrollY;
+      const delta = y - lastY;
+      if (Math.abs(delta) < THRESHOLD) return;
+
+      // У самого верха и при открытом меню навбар виден всегда.
+      const atTop = y <= navbar.offsetHeight;
+      const menuOpen = navbar.querySelector('[data-menu]')?.getAttribute('data-open') === 'true';
+      navbar.dataset.hidden = String(!atTop && !menuOpen && delta > 0);
+      lastY = y;
+    };
+
+    addEventListener(
+      'scroll',
+      () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(update);
+      },
+      { passive: true },
+    );
+  }
 
   if (menu && toggle && items) {
     // Число пунктов нужно CSS, чтобы развернуть порядок задержек при закрытии.

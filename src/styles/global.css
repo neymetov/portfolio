@@ -27,6 +27,11 @@ body {
   line-height: var(--line-height-p2);
 }
 
+/* Отступ под фиксированный навбар: без него контент оказался бы под ним. */
+main {
+  padding-top: var(--navbar-height);
+}
+
 img,
 picture,
 svg {
