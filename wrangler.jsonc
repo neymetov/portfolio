@@ -1,9 +1,16 @@
 {
-  // Конфигурация Cloudflare Pages. Сервером ничего не считается: в dist/ лежат готовые html,
-  // поэтому нужен только каталог со собранной статикой.
-  // Автосборка из репозитория настраивается в панели Pages (build: npm run build, output: dist).
-  // Локальная проверка того же артефакта: npx wrangler pages deploy
+  // Раздача собранной статики через Cloudflare Workers. Серверного кода нет: в dist/ лежат
+  // готовые html, поэтому вместо "main" указан каталог ассетов.
+  //
+  // Автосборка из репозитория (Workers Builds) настроена в панели:
+  //   build command:  npm run build
+  //   deploy command: npx wrangler deploy
+  // Конфиг обязан быть именно Workers-вида: с "pages_build_output_dir" команда deploy падает
+  // с «Missing entry-point to Worker script or to assets directory».
   "name": "elshan-neymatov-site",
   "compatibility_date": "2026-07-27",
-  "pages_build_output_dir": "./dist"
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
 }
