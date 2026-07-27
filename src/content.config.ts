@@ -103,6 +103,23 @@ const site = defineCollection({
   }),
 });
 
+const illustrations = defineCollection({
+  loader: file('./src/content/singletons/illustrations.json', {
+    parser: (text) => ({ illustrations: JSON.parse(text) }),
+  }),
+  schema: z.object({
+    title: z.string(),
+    caption: z.string().default(''),
+    galleryLabel: z.string().default('Show gallery'),
+    galleryUrl: z.string().default('/works'),
+    instagramLabel: z.string().default('Instagram'),
+    instagramUrl: z.string().default(''),
+    images: z.array(imageBlock).default([]),
+    decorImage: z.string(),
+    bannerImage: z.string(),
+  }),
+});
+
 const navigation = defineCollection({
   loader: file('./src/content/singletons/navigation.json', {
     parser: (text) => ({ navigation: JSON.parse(text) }),
@@ -143,6 +160,7 @@ export const collections = {
   site,
   home,
   worksPage,
+  illustrations,
   navigation,
   siteFooter,
 };

@@ -4,6 +4,7 @@ import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import SkillSection from '../components/SkillSection.astro';
 import LastWorks from '../components/LastWorks.astro';
+import IllustrationSection from '../components/IllustrationSection.astro';
 
 const home = (await getEntry('home', 'home'))!.data;
 const site = (await getEntry('site', 'site'))!.data;
@@ -31,4 +32,6 @@ const lastWorks = (await getCollection('works'))
     buttonLabel={home.lastWorks.buttonLabel}
     works={lastWorks}
   />
+
+  <IllustrationSection />
 </Base>

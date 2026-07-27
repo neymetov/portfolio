@@ -1,11 +1,12 @@
 ---
 // Кнопка-ссылка из макета. Варианты заливки описаны классами .btn-* в global.css:
 // primary — neutral-800 с текстом neutral-50 (CTA футера);
-// secondary — neutral-900 с рамкой neutral-700 и chevron (переход в раздел).
+// secondary — neutral-900 с рамкой neutral-700 и chevron (переход в раздел);
+// soft — neutral-200 с рамкой neutral-300 (второстепенное действие рядом с secondary).
 interface Props {
   href: string;
   label: string;
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'soft';
   external?: boolean;
 }
 

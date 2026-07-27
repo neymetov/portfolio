@@ -14,7 +14,7 @@ export default config({
     brand: { name: 'Elshan Neymatov' },
     // Все синглтоны и коллекции обязаны быть перечислены здесь, иначе редактор их не увидит.
     navigation: {
-      Страницы: ['site', 'home', 'worksPage'],
+      Страницы: ['site', 'home', 'worksPage', 'illustrations'],
       Контент: ['works', 'skills', 'categories'],
       Служебное: ['navigation', 'siteFooter', 'processes'],
     },
@@ -96,6 +96,31 @@ export default config({
           },
           { label: 'Секция последних работ' },
         ),
+      },
+    }),
+
+    illustrations: singleton({
+      label: 'Секция иллюстраций',
+      path: 'src/content/singletons/illustrations',
+      format: { data: 'json' },
+      schema: {
+        title: fields.text({ label: 'Заголовок', multiline: true }),
+        caption: fields.text({ label: 'Подпись', multiline: true }),
+        galleryLabel: fields.text({ label: 'Кнопка галереи', defaultValue: 'Show gallery' }),
+        galleryUrl: fields.text({ label: 'Ссылка на галерею', defaultValue: '/works' }),
+        instagramLabel: fields.text({ label: 'Кнопка Instagram', defaultValue: 'Instagram' }),
+        instagramUrl: fields.text({ label: 'Ссылка на Instagram' }),
+        // Иллюстрации едут по кругу на десктопе; между ними — декоративный знак.
+        // Сколько добавит редактор, столько и встанет в круг.
+        images: fields.array(
+          fields.object({
+            src: image('Иллюстрация', 'illustrations'),
+            alt: fields.text({ label: 'Alt' }),
+          }),
+          { label: 'Иллюстрации для круга', itemLabel: (p) => p.fields.alt.value || 'Иллюстрация' },
+        ),
+        decorImage: image('Знак между иллюстрациями', 'illustrations'),
+        bannerImage: image('Фон баннера (моб.)', 'illustrations'),
       },
     }),
 

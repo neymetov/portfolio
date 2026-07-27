@@ -171,6 +171,12 @@ button {
   color: var(--color-neutral-50);
 }
 
+.btn-soft {
+  background: var(--color-neutral-200);
+  border-color: var(--color-neutral-300);
+  color: var(--color-neutral-800);
+}
+
 .btn-secondary {
   background: var(--color-neutral-900);
   border-color: var(--color-neutral-700);

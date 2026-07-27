@@ -1,0 +1,286 @@
+---
+import { getEntry } from 'astro:content';
+import Button from './Button.astro';
+
+// illustrations-section из фреймов 567:386 (desktop) и 567:475 (mobile).
+//
+// desktop — секция залипает, а круг из иллюстраций едет по часовой стрелке по мере
+//           вертикального скролла. Сделано на scroll-driven анимации (view-timeline), без JS;
+//           где браузер её не поддерживает, круг просто стоит на месте.
+// mobile   — обычный баннер: изображение на фоне и панель с текстом и кнопками.
+//
+// Иллюстрации чередуются с декоративным знаком, позиции считаются в CSS от их числа,
+// поэтому в круг встанет столько картинок, сколько добавит редактор.
+const entry = await getEntry('illustrations', 'illustrations');
+const data = entry?.data;
+
+// Чередуем: иллюстрация, знак, иллюстрация, знак… — знак заполняет промежутки круга.
+const ring = (data?.images ?? []).flatMap((image) => [
+  { kind: 'image' as const, src: image.src, alt: image.alt },
+  { kind: 'decor' as const, src: data!.decorImage, alt: '' },
+]);
+---
+
+{
+  data && (
+    <section class="illustrations" style={`--slots: ${ring.length}`}>
+      <div class="track">
+        <div class="pin">
+          {/* Круг — оформление: содержимое дублируется текстом рядом, поэтому скрыт от скринридера. */}
+          <div class="ring" aria-hidden="true">
+            {ring.map((item, index) => (
+              <div class:list={['slot', item.kind]} style={`--i: ${index}`}>
+                <img class="art" src={item.src} alt="" loading="lazy" />
+              </div>
+            ))}
+          </div>
+
+          <img class="banner-bg" src={data.bannerImage} alt="" loading="lazy" />
+
+          <div class="info">
+            <h2 class="t-h4 title">{data.title}</h2>
+            {data.caption && <p class="t-p1 caption">{data.caption}</p>}
+            <div class="actions">
+              <Button href={data.galleryUrl} label={data.galleryLabel} variant="secondary" />
+              <Button href={data.instagramUrl} label={data.instagramLabel} variant="soft" external />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+<style>
+  /* --- Мобильный баннер: изображение на фоне, панель с текстом снизу --- */
+  .pin {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    overflow: clip;
+    min-height: var(--bento-h-xxl);
+    margin: var(--space-x) var(--space-margin);
+    padding: var(--space-l);
+    border-radius: var(--radius-xxl);
+  }
+
+  .banner-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .info {
+    position: relative;
+    display: flex;
+    flex: 1 0 0;
+    flex-direction: column;
+    gap: var(--space-m);
+    align-items: center;
+    min-width: 0;
+    padding: var(--space-xl) var(--space-l);
+    border-radius: var(--radius-xxl);
+    background: var(--color-neutral-50);
+    text-align: center;
+  }
+
+  .title {
+    color: var(--color-neutral-900);
+  }
+
+  .caption {
+    color: var(--color-neutral-500);
+  }
+
+  .actions {
+    display: flex;
+    gap: var(--space-s);
+    width: 100%;
+  }
+
+  .actions :global(.btn) {
+    flex: 1 0 0;
+    min-width: 0;
+  }
+
+  /* Круг нужен только десктопу. */
+  .ring {
+    display: none;
+  }
+
+  @media (min-width: 1024px) {
+    /*
+      Высота дорожки задаёт длину прокрутки, на которой крутится круг,
+      а .pin залипает на весь экран.
+    */
+    .track {
+      height: 240vh;
+    }
+
+    .pin {
+      position: sticky;
+      top: 0;
+      overflow: clip;
+      align-items: center;
+      height: 100vh;
+      min-height: 0;
+      margin: 0;
+      padding: var(--space-xl) var(--space-margin);
+      border-radius: 0;
+    }
+
+    .banner-bg {
+      display: none;
+    }
+
+    .info {
+      flex: none;
+      width: min(760px, 100%);
+      background: none;
+      padding: 0;
+      gap: var(--space-l);
+    }
+
+    .actions {
+      justify-content: center;
+      width: auto;
+    }
+
+    .actions :global(.btn) {
+      flex: none;
+      width: 200px;
+    }
+
+    /* --- Круг --- */
+    .ring {
+      /*
+        Диаметр берётся от ширины, а не от высоты: в макете круг шире экрана по вертикали,
+        верхние и нижние элементы срезаются краем секции и выезжают по мере вращения.
+        Радиус заведомо больше половины текстового блока, иначе иллюстрации наезжают на текст.
+      */
+      --ring-size: min(1200px, 92vw);
+      --radius: calc(var(--ring-size) / 2);
+      --step: calc(360deg / var(--slots));
+
+      position: absolute;
+      inset: 0;
+      display: block;
+      margin: auto;
+      width: var(--ring-size);
+      height: var(--ring-size);
+      pointer-events: none;
+    }
+
+    /*
+      Каждый элемент ставится на окружность поворотом вокруг центра круга,
+      а внутренняя картинка отыгрывает этот поворот назад, чтобы не переворачиваться.
+    */
+    .slot {
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      display: grid;
+      place-items: center;
+      width: var(--item);
+      height: var(--item);
+      transform: rotate(calc(var(--i) * var(--step))) translateY(calc(-1 * var(--radius)));
+    }
+
+    .slot.image {
+      --item: calc(var(--ring-size) * 0.2);
+    }
+
+    .slot.decor {
+      --item: calc(var(--ring-size) * 0.12);
+    }
+
+    .art {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      /* Наклон из макета плюс компенсация поворота слота. */
+      transform: rotate(calc(-1 * var(--i) * var(--step) + 10deg));
+    }
+
+    .slot.image .art {
+      object-fit: cover;
+      border-radius: var(--radius-xl);
+    }
+
+    /* Цветное свечение под иллюстрацией — как размытые пятна в макете. */
+    .slot.image::before {
+      content: '';
+      position: absolute;
+      inset: -18%;
+      border-radius: 50%;
+      background: var(--glow, #97f8e6);
+      filter: blur(40px);
+      opacity: 0.55;
+    }
+
+    .slot.image:nth-of-type(4n + 1) {
+      --glow: #97f8e6;
+    }
+    .slot.image:nth-of-type(4n + 3) {
+      --glow: #ffeda4;
+    }
+    .slot.image:nth-of-type(4n + 5) {
+      --glow: #ffb5b4;
+    }
+    .slot.image:nth-of-type(4n + 7) {
+      --glow: #a2e9d7;
+    }
+
+    /*
+      Вращение привязано к прокрутке дорожки: круг поворачивается по часовой стрелке,
+      картинки внутри — против, чтобы оставаться в исходном наклоне.
+    */
+    .track {
+      view-timeline: --illustrations block;
+    }
+
+    .ring,
+    .art {
+      animation-timeline: --illustrations;
+      animation-range: entry 0% exit 100%;
+      animation-fill-mode: both;
+      animation-timing-function: linear;
+    }
+
+    .ring {
+      animation-name: ring-spin;
+    }
+
+    .art {
+      animation-name: art-counter-spin;
+    }
+
+    @keyframes ring-spin {
+      from {
+        rotate: 0deg;
+      }
+      to {
+        rotate: 150deg;
+      }
+    }
+
+    @keyframes art-counter-spin {
+      from {
+        rotate: 0deg;
+      }
+      to {
+        rotate: -150deg;
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ring,
+    .art {
+      animation: none;
+    }
+  }
+</style>
