@@ -2,8 +2,7 @@
   "title": "Bir Ecosystem design system",
   "shortDescription": "Short description — replace with the real case summary.",
   "categoryTags": [
-    "product-identity",
-    "interfaces"
+    "product-identity"
   ],
   "cardSize": "wide",
   "showOnHome": true,

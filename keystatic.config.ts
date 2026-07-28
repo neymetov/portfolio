@@ -82,11 +82,7 @@ export default config({
           { label: 'Hero — баннер с изображением' },
         ),
         skillSectionTitle: fields.text({ label: 'Заголовок skill-секции' }),
-        // Порядок карточек на главной задаётся здесь, а не порядком файлов.
-        skillCards: fields.array(fields.relationship({ label: 'Карточка', collection: 'skills' }), {
-          label: 'Карточки skill-секции',
-          itemLabel: (p) => p.value ?? 'Карточка',
-        }),
+        // Сами карточки живут в коллекции «Skill-карточки», порядок задаётся их полем «Порядок».
         lastWorks: fields.object(
           {
             title: fields.text({ label: 'Заголовок' }),

@@ -77,7 +77,6 @@ const home = defineCollection({
     }),
     heroImage: imageBlock,
     skillSectionTitle: z.string().default(''),
-    skillCards: z.array(reference('skills')).default([]),
     lastWorks: z.object({
       title: z.string(),
       year: z.string().default(''),

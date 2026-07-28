@@ -7,11 +7,12 @@
   },
   "scripts": {
     "dev": "npm run tokens && KEYSTATIC=1 astro dev",
-    "build": "npm run tokens && astro build",
+    "build": "npm run tokens && npm run check && astro build",
     "preview": "astro preview",
     "astro": "astro",
     "tokens": "node scripts/build-tokens.mjs",
-    "icons": "node scripts/normalize-icons.mjs"
+    "icons": "node scripts/normalize-icons.mjs",
+    "check": "node scripts/check-content.mjs"
   },
   "dependencies": {
     "@astrojs/markdoc": "^2.0.4",
