@@ -14,7 +14,9 @@ const { title, shortDescription, heroImage } = work.data;
 ---
 
 <a class="work" href={`/work/${work.id}`}>
-  <img class="media ratio-square" src={heroImage} alt={title} loading="lazy" />
+  <figure class="cover">
+    <img class="media ratio-square" src={heroImage} alt={title} loading="lazy" />
+  </figure>
   <div class="info">
     <p class="t-h5 title">{title}</p>
     {shortDescription && <p class="t-p2 caption">{shortDescription}</p>}
@@ -26,6 +28,23 @@ const { title, shortDescription, heroImage } = work.data;
     display: flex;
     flex-direction: column;
     gap: var(--space-l);
+  }
+
+  /* Рамка обрезает картинку, поэтому при наведении она увеличивается внутри карточки. */
+  .cover {
+    margin: 0;
+    overflow: clip;
+    border-radius: var(--radius-xxl);
+  }
+
+  .media {
+    border-radius: 0;
+    transition: transform 400ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .work:hover .media,
+  .work:focus-visible .media {
+    transform: scale(1.1);
   }
 
   .info {
@@ -44,5 +63,16 @@ const { title, shortDescription, heroImage } = work.data;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .media {
+      transition: none;
+    }
+
+    .work:hover .media,
+    .work:focus-visible .media {
+      transform: none;
+    }
   }
 </style>
