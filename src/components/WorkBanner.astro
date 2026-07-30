@@ -1,0 +1,39 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+// Широкая работа без подписи: только изображение во всю ширину контента.
+// Пропорции те же, что у широкой карточки с панелью, — 1280×628 на десктопе,
+// 343×523 на мобильном, чтобы ряды соседних блоков не сбивались по высоте.
+interface Props {
+  work: CollectionEntry<'works'>;
+}
+
+const { work } = Astro.props;
+const { title, heroImage } = work.data;
+---
+
+<a class="banner" href={`/work/${work.id}`}>
+  <img class="media" src={heroImage} alt={title} loading="lazy" />
+</a>
+
+<style>
+  .banner {
+    display: block;
+    overflow: clip;
+    height: var(--bento-h-xxl);
+    border-radius: var(--radius-xxl);
+  }
+
+  .media {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+  }
+
+  @media (min-width: 1024px) {
+    .banner {
+      height: var(--bento-h-banner);
+    }
+  }
+</style>

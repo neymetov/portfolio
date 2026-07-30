@@ -209,6 +209,7 @@ export default config({
           label: 'Как показывать на /works',
           options: [
             { label: 'Широкая — на всю ширину, с названием и описанием', value: 'wide' },
+            { label: 'Баннер — на всю ширину, только изображение', value: 'banner' },
             { label: 'Split — половина ширины, в паре с соседней', value: 'split' },
             { label: 'Маленькая — в ряду из четырёх', value: 'small' },
           ],

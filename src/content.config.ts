@@ -12,7 +12,7 @@ const works = defineCollection({
     title: z.string(),
     shortDescription: z.string().default(''),
     categoryTags: z.array(reference('categories')).default([]),
-    cardSize: z.enum(['wide', 'split', 'small']).default('small'),
+    cardSize: z.enum(['wide', 'banner', 'split', 'small']).default('small'),
     showOnHome: z.boolean().default(false),
     heroImage: z.string(),
     order: z.number().default(0),

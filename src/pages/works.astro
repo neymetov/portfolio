@@ -2,6 +2,7 @@
 import { getEntry, getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import FeaturedWork from '../components/FeaturedWork.astro';
+import WorkBanner from '../components/WorkBanner.astro';
 import WorkCard from '../components/WorkCard.astro';
 import WorksFilter from '../components/WorksFilter.tsx';
 
@@ -10,6 +11,7 @@ import WorksFilter from '../components/WorksFilter.tsx';
 // Состав страницы задают сами работы: поле «Как показывать на /works» (wide / split / small)
 // и «Порядок сортировки». Страница идёт по работам по порядку и склеивает блоки:
 //   wide  — широкая карточка с названием и описанием, отдельным блоком;
+//   banner — то же во всю ширину, но без подписи: одно изображение;
 //   split — половина ширины, копится в баннеры по две;
 //   small — копится в ряд (на десктопе четыре укладываются ровно в ширину контента).
 // Так редактор управляет и составом, и порядком, а вёрстка не знает заранее ни числа блоков,
@@ -25,6 +27,7 @@ const categories = (await getCollection('categories')).sort(
 type Work = (typeof works)[number];
 type Block =
   | { kind: 'wide'; works: [Work] }
+  | { kind: 'banner'; works: [Work] }
   | { kind: 'split'; works: Work[] }
   | { kind: 'small'; works: Work[] };
 
@@ -33,8 +36,9 @@ const blocks: Block[] = [];
 for (const work of works) {
   const size = work.data.cardSize;
 
-  if (size === 'wide') {
-    blocks.push({ kind: 'wide', works: [work] });
+  // Широкие блоки всегда стоят отдельно и ни с чем не склеиваются.
+  if (size === 'wide' || size === 'banner') {
+    blocks.push({ kind: size, works: [work] });
     continue;
   }
 
@@ -66,10 +70,14 @@ const tags = (work: Work) => work.data.categoryTags.map((tag) => tag.id).join(' 
 
   {
     blocks.map((block) =>
-      block.kind === 'wide' ? (
+      block.kind === 'wide' || block.kind === 'banner' ? (
         <section class="block" data-works-row>
           <div data-work-categories={tags(block.works[0])}>
-            <FeaturedWork work={block.works[0]} />
+            {block.kind === 'wide' ? (
+              <FeaturedWork work={block.works[0]} />
+            ) : (
+              <WorkBanner work={block.works[0]} />
+            )}
           </div>
         </section>
       ) : (
