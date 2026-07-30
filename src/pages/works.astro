@@ -78,7 +78,7 @@ const tags = (work: Work) => work.data.categoryTags.map((tag) => tag.id).join(' 
         </section>
       ) : (
         <section class="block" data-works-row>
-          <ul class="hscroll row">
+          <ul class="row">
             {block.works.map((work) => (
               <li data-work-categories={tags(work)}>
                 <WorkCard work={work} />
@@ -136,24 +136,10 @@ const tags = (work: Work) => work.data.categoryTags.map((tag) => tag.id).join(' 
     }
   }
 
-  /*
-    Ряды тянутся до правого края экрана: на мобильном карточки уходят под кромку и ряд
-    листается, на десктопе ряд укладывается ровно (4×302 + 3×24 = 1280 и 2×628 + 24 = 1280).
-  */
-  /* На мобильном ряд листается: карточка во всю ширину контента, следующая выглядывает справа. */
+  /* На мобильном работы идут друг под другом во всю ширину контента. */
   .row {
-    --card-width: var(--bento-w-l);
-    --row-gap: var(--space-x);
-    margin-right: calc(-1 * var(--space-margin));
-  }
-
-  /* Спейсер гасит собственный gap, иначе ряд оказывается на один зазор шире нужного
-     и «скроллится» там, где по макету должен укладываться ровно. */
-  .row::after {
-    content: '';
-    flex: none;
-    width: var(--space-margin);
-    margin-left: calc(-1 * var(--row-gap));
+    display: grid;
+    gap: var(--space-x);
   }
 
   /* Скрытые фильтром элементы не должны оставлять зазор в ряду. */
@@ -162,22 +148,10 @@ const tags = (work: Work) => work.data.categoryTags.map((tag) => tag.id).join(' 
   }
 
   @media (min-width: 1024px) {
-    /* На десктопе — сетка из трёх равных колонок вместо листающегося ряда. */
+    /* На десктопе — три равные колонки. */
     .row {
-      display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: var(--space-l);
-      overflow: visible;
-      margin-right: 0;
-    }
-
-    /* Ширину задаёт колонка сетки, а не переменная скролл-ряда. */
-    .row > li {
-      width: auto;
-    }
-
-    .row::after {
-      display: none;
     }
   }
 </style>
