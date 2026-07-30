@@ -1,25 +1,41 @@
 ---
+import { getEntry } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 
-// Карточка работы из фреймов `all works` и `Home`: квадратная картинка, под ней название (h5)
-// и короткое описание (p2). Зазор между картинкой и подписью — space-l (16 моб / 24 десктоп).
-// Ширину карточки задаёт ряд-родитель через --card-width, поэтому одна и та же карточка
-// работает и в ряду мелких (302/164), и в парном блоке (628/343).
+// Карточка работы: квадратная картинка, под ней название (p1), описание (p3) и тег рубрики.
+// Тег в покое скрыт и при наведении съезжает сверху вниз; место под него зарезервировано,
+// поэтому высота карточки не меняется и сетка не дёргается.
+// Ширину карточки задаёт ряд-родитель.
 interface Props {
   work: CollectionEntry<'works'>;
 }
 
 const { work } = Astro.props;
-const { title, shortDescription, heroImage } = work.data;
+const { title, shortDescription, heroImage, categoryTags } = work.data;
+
+// В теге — первая рубрика работы: их может быть несколько, но плашка в макете одна.
+const [firstTag] = categoryTags;
+const category = firstTag ? await getEntry(firstTag) : undefined;
 ---
 
 <a class="work" href={`/work/${work.id}`}>
   <figure class="cover">
     <img class="media ratio-square" src={heroImage} alt={title} loading="lazy" />
   </figure>
+
   <div class="info">
-    <p class="t-h5 title">{title}</p>
-    {shortDescription && <p class="t-p2 caption">{shortDescription}</p>}
+    <div class="text">
+      <p class="t-p1 title">{title}</p>
+      {shortDescription && <p class="t-p3 caption">{shortDescription}</p>}
+    </div>
+
+    {
+      category && (
+        <div class="tag-slot">
+          <span class="tag">{category.data.title}</span>
+        </div>
+      )
+    }
   </div>
 </a>
 
@@ -50,6 +66,12 @@ const { title, shortDescription, heroImage } = work.data;
   .info {
     display: flex;
     flex-direction: column;
+    gap: var(--space-s);
+  }
+
+  .text {
+    display: flex;
+    flex-direction: column;
   }
 
   .title {
@@ -65,8 +87,35 @@ const { title, shortDescription, heroImage } = work.data;
     overflow: hidden;
   }
 
+  /* Место под тег занято всегда, а сам он выезжает из-за верхней кромки этой полосы. */
+  .tag-slot {
+    overflow: clip;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: var(--space-xs) var(--space-s);
+    border-radius: var(--radius-s);
+    background: var(--color-neutral-100);
+    color: var(--color-neutral-500);
+    font-size: var(--font-size-p4);
+    line-height: var(--line-height-p4);
+    opacity: 0;
+    transform: translateY(-100%);
+    transition:
+      opacity 400ms ease,
+      transform 400ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  .work:hover .tag,
+  .work:focus-visible .tag {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .media {
+    .media,
+    .tag {
       transition: none;
     }
 
