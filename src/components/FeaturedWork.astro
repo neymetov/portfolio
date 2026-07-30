@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import Chip from './Chip.astro';
 
 // Широкая работа (фрейм work_hero): два блока рядом — текст и квадратное изображение.
 // Раньше панель с текстом лежала поверх картинки, из-за чего на десктопе и мобильном
@@ -31,7 +32,7 @@ const dateLabel =
 <Wrapper class="featured" href={heading === 'h1' ? undefined : `/work/${work.id}`}>
   <div class="info">
     <Title class="t-h4 title">{title}</Title>
-    {dateLabel && <p class="date">{dateLabel}</p>}
+    {dateLabel && <Chip label={dateLabel} />}
     {shortDescription && <p class="t-p2 caption">{shortDescription}</p>}
   </div>
 
@@ -62,15 +63,9 @@ const dateLabel =
     color: var(--color-neutral-500);
   }
 
-  /* Тег с датой: плашка neutral-100 по размеру текста. */
-  .date {
+  /* Плашка с датой не тянется на всю колонку. */
+  .info :global(.chip) {
     align-self: flex-start;
-    padding: var(--space-xs) var(--space-s);
-    border-radius: var(--radius-s);
-    background: var(--color-neutral-100);
-    color: var(--color-neutral-500);
-    font-size: var(--font-size-p4);
-    line-height: var(--line-height-p4);
   }
 
   .cover {

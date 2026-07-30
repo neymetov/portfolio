@@ -1,0 +1,28 @@
+---
+// Небольшая плашка под текстом: рубрика работы в карточке, дата в шапке проекта.
+// Вид один на оба случая — neutral-100 с текстом p4.
+//
+// Класс намеренно не .tag: это имя занято глобальной плашкой в global.css
+// (должность и специальность в анкете), у неё другая высота и скругление.
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<span class="chip">{label}</span>
+
+<style>
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--space-xs) var(--space-s);
+    border-radius: var(--radius-s);
+    background: var(--color-neutral-100);
+    color: var(--color-neutral-500);
+    font-size: var(--font-size-p4);
+    line-height: var(--line-height-p4);
+    white-space: nowrap;
+  }
+</style>
