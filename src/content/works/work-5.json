@@ -4,7 +4,7 @@
   "categoryTags": [
     "icons"
   ],
-  "cardSize": "small",
+  "cardSize": "card",
   "showOnHome": false,
   "heroImage": "/images/works/work-5.svg",
   "order": 4,

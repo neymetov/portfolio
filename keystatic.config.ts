@@ -210,10 +210,9 @@ export default config({
           options: [
             { label: 'Широкая — на всю ширину, с названием и описанием', value: 'wide' },
             { label: 'Баннер — на всю ширину, только изображение', value: 'banner' },
-            { label: 'Split — половина ширины, в паре с соседней', value: 'split' },
-            { label: 'Маленькая — в ряду из четырёх', value: 'small' },
+            { label: 'Карточка — треть ширины, три в ряд', value: 'card' },
           ],
-          defaultValue: 'small',
+          defaultValue: 'card',
         }),
         showOnHome: fields.checkbox({ label: 'Показывать на главной в Last Projects' }),
         heroImage: image('Главное изображение', 'works'),

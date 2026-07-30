@@ -4,7 +4,7 @@
   "categoryTags": [
     "branding"
   ],
-  "cardSize": "wide",
+  "cardSize": "card",
   "showOnHome": true,
   "heroImage": "/images/works/japanese-film-directors-festival/heroImage.png",
   "order": 1,

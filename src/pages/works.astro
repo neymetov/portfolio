@@ -8,12 +8,11 @@ import WorksFilter from '../components/WorksFilter.tsx';
 
 // Страница `all works` (фрейм 527:2004): заголовок, ряд табов рубрик и блоки работ.
 //
-// Состав страницы задают сами работы: поле «Как показывать на /works» (wide / split / small)
+// Состав страницы задают сами работы: поле «Как показывать на /works» (wide / banner / card)
 // и «Порядок сортировки». Страница идёт по работам по порядку и склеивает блоки:
-//   wide  — широкая карточка с названием и описанием, отдельным блоком;
-//   banner — то же во всю ширину, но без подписи: одно изображение;
-//   split — половина ширины, копится в баннеры по две;
-//   small — копится в ряд (на десктопе четыре укладываются ровно в ширину контента).
+//   wide   — широкая работа: текст и квадратная обложка, отдельным блоком;
+//   banner — во всю ширину без подписи: одно изображение;
+//   card   — карточки копятся по три в ряд.
 // Так редактор управляет и составом, и порядком, а вёрстка не знает заранее ни числа блоков,
 // ни числа карточек в них.
 const page = (await getEntry('worksPage', 'works'))!.data;
@@ -28,8 +27,7 @@ type Work = (typeof works)[number];
 type Block =
   | { kind: 'wide'; works: [Work] }
   | { kind: 'banner'; works: [Work] }
-  | { kind: 'split'; works: Work[] }
-  | { kind: 'small'; works: Work[] };
+  | { kind: 'card'; works: Work[] };
 
 const blocks: Block[] = [];
 
@@ -42,11 +40,9 @@ for (const work of works) {
     continue;
   }
 
+  // Карточки копятся в ряд по три; четвёртая начинает новый ряд.
   const last = blocks.at(-1);
-  // Продолжаем предыдущий блок того же вида, пока он не заполнен: split — до двух карточек,
-  // small — сколько угодно (ряд листается, если не влезает).
-  const canContinue =
-    last?.kind === size && (size === 'small' || last.works.length < 2);
+  const canContinue = last?.kind === 'card' && last.works.length < 3;
 
   if (canContinue) last.works.push(work);
   else blocks.push({ kind: size, works: [work] });
@@ -82,7 +78,7 @@ const tags = (work: Work) => work.data.categoryTags.map((tag) => tag.id).join(' 
         </section>
       ) : (
         <section class="block" data-works-row>
-          <ul class:list={['hscroll', 'row', `row-${block.kind}`]}>
+          <ul class="hscroll row">
             {block.works.map((work) => (
               <li data-work-categories={tags(work)}>
                 <WorkCard work={work} />
@@ -144,9 +140,10 @@ const tags = (work: Work) => work.data.categoryTags.map((tag) => tag.id).join(' 
     Ряды тянутся до правого края экрана: на мобильном карточки уходят под кромку и ряд
     листается, на десктопе ряд укладывается ровно (4×302 + 3×24 = 1280 и 2×628 + 24 = 1280).
   */
+  /* На мобильном ряд листается: карточка во всю ширину контента, следующая выглядывает справа. */
   .row {
-    /* Зазор между карточками: 16 на мобильном, 24 на десктопе. */
-    --row-gap: var(--space-l);
+    --card-width: var(--bento-w-l);
+    --row-gap: var(--space-x);
     margin-right: calc(-1 * var(--space-margin));
   }
 
@@ -159,38 +156,24 @@ const tags = (work: Work) => work.data.categoryTags.map((tag) => tag.id).join(' 
     margin-left: calc(-1 * var(--row-gap));
   }
 
-  .row-small {
-    --card-width: var(--bento-w-s);
-  }
-
-  /*
-    В парных блоках зазор 24 на обеих раскладках, поэтому на мобильном это space-x,
-    а на десктопе space-l — в мелком ряду зазор остаётся 16/24.
-  */
-  .row-split {
-    --card-width: var(--bento-w-l);
-    --row-gap: var(--space-x);
-  }
-
   /* Скрытые фильтром элементы не должны оставлять зазор в ряду. */
   .row li[hidden] {
     display: none;
   }
 
   @media (min-width: 1024px) {
-    .row-split {
-      --row-gap: var(--space-l);
+    /* На десктопе — сетка из трёх равных колонок вместо листающегося ряда. */
+    .row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-l);
+      overflow: visible;
+      margin-right: 0;
     }
 
-    /*
-      Карточки в рядах имеют фиксированную ширину из bento-токенов, поэтому на экранах шире
-      1440 ряд узок и без выравнивания липнет к левому краю, тогда как широкая карточка тянется
-      на всю ширину. Центрируем ряд; safe center нужен, чтобы при большом числе карточек
-      ряд снова листался от левого края, а не обрезался с обеих сторон.
-    */
-    .row {
-      justify-content: safe center;
-      margin-right: 0;
+    /* Ширину задаёт колонка сетки, а не переменная скролл-ряда. */
+    .row > li {
+      width: auto;
     }
 
     .row::after {
