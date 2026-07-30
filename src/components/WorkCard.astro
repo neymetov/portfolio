@@ -32,7 +32,7 @@ const category = firstTag ? await getEntry(firstTag) : undefined;
     {
       category && (
         <div class="tag-slot">
-          <span class="tag">{category.data.title}</span>
+          <span class="category">{category.data.title}</span>
         </div>
       )
     }
@@ -87,12 +87,13 @@ const category = firstTag ? await getEntry(firstTag) : undefined;
     overflow: hidden;
   }
 
-  /* Место под тег занято всегда, а сам он выезжает из-за верхней кромки этой полосы. */
+  /* Место под тег занято всегда, а сам он выезжает из-за верхней кромки этой полосы.
+     Класс не .tag: это имя занято глобальной плашкой с другой геометрией. */
   .tag-slot {
     overflow: clip;
   }
 
-  .tag {
+  .category {
     display: inline-block;
     padding: var(--space-xs) var(--space-s);
     border-radius: var(--radius-s);
@@ -107,15 +108,15 @@ const category = firstTag ? await getEntry(firstTag) : undefined;
       transform 400ms cubic-bezier(0.22, 0.61, 0.36, 1);
   }
 
-  .work:hover .tag,
-  .work:focus-visible .tag {
+  .work:hover .category,
+  .work:focus-visible .category {
     opacity: 1;
     transform: translateY(0);
   }
 
   @media (prefers-reduced-motion: reduce) {
     .media,
-    .tag {
+    .category {
       transition: none;
     }
 
