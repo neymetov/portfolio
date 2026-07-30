@@ -8,5 +8,28 @@
   "showOnHome": true,
   "heroImage": "/images/works/azerlotereya-brand-identity-concept/heroImage.png",
   "order": 0,
-  "galleryBlocks": []
+  "galleryBlocks": [
+    {
+      "type": "split-2",
+      "images": [
+        {
+          "src": "/images/works/azerlotereya-brand-identity-concept/galleryBlocks/0/images/0/src.png",
+          "alt": "azerlotereya_ad"
+        },
+        {
+          "src": "/images/works/azerlotereya-brand-identity-concept/galleryBlocks/0/images/1/src.png",
+          "alt": "azerlotereya-stand"
+        }
+      ]
+    },
+    {
+      "type": "full",
+      "images": [
+        {
+          "src": "/images/works/azerlotereya-brand-identity-concept/galleryBlocks/1/images/0/src.png",
+          "alt": "azerlotereya-sm"
+        }
+      ]
+    }
+  ]
 }
