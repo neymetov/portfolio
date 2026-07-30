@@ -15,15 +15,23 @@ interface Props {
 }
 
 const { work, heading = 'h2' } = Astro.props;
-const { title, shortDescription, heroImage } = work.data;
+const { title, shortDescription, heroImage, date } = work.data;
 
 const Wrapper = heading === 'h1' ? 'div' : 'a';
 const Title = heading;
+
+// В шапке проекта под названием стоит тег с датой: месяц и год, без дня.
+// В списке работ на /works даты нет — там карточка ведёт на проект.
+const dateLabel =
+  heading === 'h1' && date
+    ? new Date(date).toLocaleDateString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' })
+    : null;
 ---
 
 <Wrapper class="featured" href={heading === 'h1' ? undefined : `/work/${work.id}`}>
   <div class="info">
     <Title class="t-h4 title">{title}</Title>
+    {dateLabel && <p class="date">{dateLabel}</p>}
     {shortDescription && <p class="t-p2 caption">{shortDescription}</p>}
   </div>
 
@@ -52,6 +60,17 @@ const Title = heading;
 
   .caption {
     color: var(--color-neutral-500);
+  }
+
+  /* Тег с датой: плашка neutral-100 по размеру текста. */
+  .date {
+    align-self: flex-start;
+    padding: var(--space-xs) var(--space-s);
+    border-radius: var(--radius-s);
+    background: var(--color-neutral-100);
+    color: var(--color-neutral-500);
+    font-size: var(--font-size-p4);
+    line-height: var(--line-height-p4);
   }
 
   .cover {

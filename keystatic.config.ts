@@ -215,6 +215,8 @@ export default config({
           defaultValue: 'card',
         }),
         showOnHome: fields.checkbox({ label: 'Показывать на главной в Last Projects' }),
+        // Показывается тегом в шапке проекта. День не выводится — только месяц и год.
+        date: fields.date({ label: 'Дата проекта (выводится как «July 2026»)' }),
         heroImage: image('Главное изображение', 'works'),
         order: fields.integer({ label: 'Порядок сортировки', defaultValue: 0 }),
         process: fields.relationship({ label: 'Связанный процесс', collection: 'processes' }),

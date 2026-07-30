@@ -14,6 +14,7 @@ const works = defineCollection({
     categoryTags: z.array(reference('categories')).default([]),
     cardSize: z.enum(['wide', 'banner', 'card']).default('card'),
     showOnHome: z.boolean().default(false),
+    date: z.string().nullable().default(null),
     heroImage: z.string(),
     order: z.number().default(0),
     process: reference('processes').optional().nullable(),
