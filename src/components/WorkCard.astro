@@ -2,6 +2,7 @@
 import { getEntry } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import Chip from './Chip.astro';
+import { monthYear } from '../utils/format';
 
 // Карточка работы: квадратная картинка, под ней название (p1), описание (p3) и тег рубрики.
 // Тег в покое скрыт и при наведении съезжает сверху вниз; место под него зарезервировано,
@@ -9,14 +10,17 @@ import Chip from './Chip.astro';
 // Ширину карточки задаёт ряд-родитель.
 interface Props {
   work: CollectionEntry<'works'>;
+  // Что показывать в плашке: рубрику (по умолчанию) или дату проекта.
+  chip?: 'category' | 'date';
 }
 
-const { work } = Astro.props;
-const { title, shortDescription, heroImage, categoryTags } = work.data;
+const { work, chip = 'category' } = Astro.props;
+const { title, shortDescription, heroImage, categoryTags, date } = work.data;
 
-// В теге — первая рубрика работы: их может быть несколько, но плашка в макете одна.
+// Рубрик у работы может быть несколько, но плашка в макете одна — берём первую.
 const [firstTag] = categoryTags;
-const category = firstTag ? await getEntry(firstTag) : undefined;
+const category = chip === 'category' && firstTag ? await getEntry(firstTag) : undefined;
+const chipLabel = chip === 'date' ? monthYear(date) : category?.data.title;
 ---
 
 <a class="work" href={`/work/${work.id}`}>
@@ -31,9 +35,9 @@ const category = firstTag ? await getEntry(firstTag) : undefined;
     </div>
 
     {
-      category && (
+      chipLabel && (
         <div class="chip-slot">
-          <Chip label={category.data.title} />
+          <Chip label={chipLabel} />
         </div>
       )
     }

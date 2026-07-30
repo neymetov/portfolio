@@ -81,7 +81,7 @@ const tags = (work: Work) => work.data.categoryTags.map((tag) => tag.id).join(' 
           <ul class="row">
             {block.works.map((work) => (
               <li data-work-categories={tags(work)}>
-                <WorkCard work={work} />
+                <WorkCard work={work} chip="date" />
               </li>
             ))}
           </ul>
