@@ -3,7 +3,8 @@ import { useRef, useState } from 'react';
 // Единственный интерактивный остров на сайте: табы рубрик на /works.
 // Разметку карточек рендерит Astro на сборке — здесь только показ/скрытие по рубрике.
 //
-// Вид из макета (фрейм `tab`): текст h5 bold, активный — neutral-900, остальные — neutral-400.
+// Вид из макета (фрейм `tab`): текст h5 bold, активный — neutral-900, остальные — neutral-400,
+// а под курсором неактивный темнеет до neutral-500.
 // Зазор между табами space-l, вертикальный отступ space-xs. На мобильном ряд листается по X.
 //
 // При смене рубрики блоки работ уезжают в сторону, противоположную движению по табам,
@@ -98,6 +99,8 @@ export default function WorksFilter({ categories, allLabel = 'All' }: Props) {
           cursor: pointer;
           transition: color 160ms ease;
         }
+        /* Неактивная рубрика под курсором темнеет на один шаг палитры: 400 → 500. */
+        .tab:hover:not([aria-selected='true']) { color: var(--color-neutral-500); }
         .tab[aria-selected='true'] { color: var(--color-neutral-900); }
       `}</style>
     </div>
