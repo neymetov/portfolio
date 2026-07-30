@@ -1,6 +1,6 @@
 {
   "title": "Japanese Film Directors Festival",
-  "shortDescription": "Japanese Film Directors Festival",
+  "shortDescription": "A student project made at the British Higher School of Art & Design under Leonid Slavin. The starting point was how to carry the formal, almost ritual language of Japanese cinema in a single object. \n\nThe director's chair stops being furniture here — its silhouette compresses into a mark that reads like a kanji, as if the festival had invented its own alphabet. Black holds the scene in silence, red is the only voice in frame. Very few elements, but they carry the full ceremony of Japanese film: the pause before the first frame, the bow before the screening begins.",
   "categoryTags": [
     "branding"
   ],
@@ -8,5 +8,36 @@
   "showOnHome": true,
   "heroImage": "/images/works/japanese-film-directors-festival/heroImage.png",
   "order": 1,
-  "galleryBlocks": []
+  "galleryBlocks": [
+    {
+      "type": "split-2",
+      "images": [
+        {
+          "src": "/images/works/japanese-film-directors-festival/galleryBlocks/0/images/0/src.png"
+        },
+        {
+          "src": "/images/works/japanese-film-directors-festival/galleryBlocks/0/images/1/src.png",
+          "alt": "japanese-tshirt"
+        }
+      ]
+    },
+    {
+      "type": "full",
+      "images": [
+        {
+          "src": "/images/works/japanese-film-directors-festival/galleryBlocks/1/images/0/src.png",
+          "alt": "japanese-laptop"
+        }
+      ]
+    },
+    {
+      "type": "full",
+      "images": [
+        {
+          "src": "/images/works/japanese-film-directors-festival/galleryBlocks/2/images/0/src.png",
+          "alt": "japanese-signs"
+        }
+      ]
+    }
+  ]
 }
