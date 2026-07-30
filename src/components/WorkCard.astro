@@ -37,7 +37,12 @@ const { title, shortDescription, heroImage } = work.data;
     color: var(--color-neutral-800);
   }
 
+  /* Описание не длиннее двух строк — дальше многоточие, чтобы карточки в ряду были ровными. */
   .caption {
     color: var(--color-neutral-500);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
   }
 </style>
