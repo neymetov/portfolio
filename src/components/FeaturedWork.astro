@@ -1,11 +1,12 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 
-// Главная работа на /works (Component 2 в макете): изображение на всю карточку, поверх него
-// панель neutral-50 с названием (h4) и описанием (p2).
+// Широкая работа (фрейм work_hero): два блока рядом — текст и квадратное изображение.
+// Раньше панель с текстом лежала поверх картинки, из-за чего на десктопе и мобильном
+// обложка кадрировалась по-разному; теперь изображение всегда квадратное и не обрезается.
 //
-// desktop — панель справа по центру, шириной 580 (628 − padding), высота карточки 628;
-// mobile  — панель прижата к низу на всю ширину, высота карточки 523.
+// desktop — текст слева, картинка справа фиксированной ширины 628;
+// mobile  — текст сверху, картинка под ним во всю ширину.
 interface Props {
   work: CollectionEntry<'works'>;
   // На /works карточка ведёт на проект и её название — h2; на самой странице проекта
@@ -21,44 +22,28 @@ const Title = heading;
 ---
 
 <Wrapper class="featured" href={heading === 'h1' ? undefined : `/work/${work.id}`}>
-  <img class="bg" src={heroImage} alt={title} />
   <div class="info">
     <Title class="t-h4 title">{title}</Title>
     {shortDescription && <p class="t-p2 caption">{shortDescription}</p>}
   </div>
+
+  <figure class="cover">
+    <img class="media" src={heroImage} alt={title} />
+  </figure>
 </Wrapper>
 
 <style>
   .featured {
-    position: relative;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    overflow: clip;
-    /* Высота карточки: 523 на мобильном (bento-h-xxl), 628 на десктопе (bento-h-banner). */
-    height: var(--bento-h-xxl);
-    padding: var(--space-l);
-    border-radius: var(--radius-xxl);
-  }
-
-  .bg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    display: grid;
+    gap: var(--space-s);
+    align-items: center;
   }
 
   .info {
-    position: relative;
     display: flex;
-    flex: 1 0 0;
     flex-direction: column;
     gap: var(--space-m);
-    min-width: 0;
-    padding: var(--space-xl);
-    border-radius: var(--radius-xxl);
-    background: var(--color-neutral-50);
+    align-self: start;
   }
 
   .title {
@@ -69,19 +54,27 @@ const Title = heading;
     color: var(--color-neutral-500);
   }
 
+  .cover {
+    margin: 0;
+    overflow: clip;
+    border-radius: var(--radius-xxl);
+  }
+
+  /* Обложка всегда квадратная — одинаково кадрируется на обеих раскладках. */
+  .media {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 0;
+  }
+
   @media (min-width: 1024px) {
+    /* Текст занимает оставшееся место, изображение — фиксированный квадрат 628. */
     .featured {
-      align-items: center;
-      justify-content: flex-end;
-      height: var(--bento-h-banner);
-      padding: var(--space-xl);
+      grid-template-columns: minmax(0, 1fr) var(--bento-w-l);
     }
 
     .info {
-      flex: none;
-      height: 100%;
-      /* 580 из макета = ширина парной карточки минус внутренний отступ. */
-      width: calc(var(--bento-w-l) - var(--space-xl));
+      align-self: center;
     }
   }
 </style>

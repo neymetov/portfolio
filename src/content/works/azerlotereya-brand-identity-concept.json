@@ -27,6 +27,15 @@
       "images": [
         {
           "src": "/images/works/azerlotereya-brand-identity-concept/galleryBlocks/1/images/0/src.png",
+          "alt": "azerlotereya_poster"
+        }
+      ]
+    },
+    {
+      "type": "full",
+      "images": [
+        {
+          "src": "/images/works/azerlotereya-brand-identity-concept/galleryBlocks/2/images/0/src.png",
           "alt": "azerlotereya-sm"
         }
       ]
