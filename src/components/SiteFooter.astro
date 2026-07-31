@@ -16,6 +16,21 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
     <footer class="section">
       <div class="banner">
         <img class="bg" src={footer.backgroundImage} alt="" />
+        {
+          footer.backgroundVideo && (
+            <video
+              class="bg video"
+              src={footer.backgroundVideo}
+              poster={footer.backgroundImage}
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              aria-hidden="true"
+            />
+          )
+        }
         <div class="info">
           <h2 class="t-h4">{footer.title}</h2>
           {footer.caption && <p class="t-p2 caption">{footer.caption}</p>}
@@ -69,6 +84,16 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  /*
+    Видео лежит поверх картинки: пока оно грузится, виден статичный кадр.
+    При уменьшенной анимации видео скрывается — остаётся картинка.
+  */
+  @media (prefers-reduced-motion: reduce) {
+    .video {
+      display: none;
+    }
   }
 
   .info,

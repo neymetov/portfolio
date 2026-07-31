@@ -145,6 +145,7 @@ const siteFooter = defineCollection({
     title: z.string(),
     caption: z.string().default(''),
     backgroundImage: z.string(),
+    backgroundVideo: z.string().nullable().default(null),
     buttonLabel: z.string(),
     externalUrl: z.string(),
     copyright: z.string().default(''),

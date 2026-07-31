@@ -170,6 +170,13 @@ export default config({
         title: fields.text({ label: 'Заголовок' }),
         caption: fields.text({ label: 'Подпись под заголовком', multiline: true }),
         backgroundImage: image('Фоновое изображение', 'hero'),
+        // Если видео задано, оно играет поверх картинки; картинка остаётся кадром-подложкой
+        // на время загрузки и в режиме уменьшенной анимации.
+        backgroundVideo: fields.file({
+          label: 'Фоновое видео (необязательно)',
+          directory: 'public/images/footer',
+          publicPath: '/images/footer/',
+        }),
         buttonLabel: fields.text({ label: 'Подпись кнопки' }),
         externalUrl: fields.url({ label: 'Ссылка на мессенджер' }),
         // Строка под карточкой: копирайт и быстрые ссылки. Разделители между ссылками
