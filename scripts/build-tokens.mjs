@@ -33,11 +33,18 @@ const kebab = (s) => s.trim().toLowerCase().replace(/[\s_]+/g, '-');
 const num = (value) => Number(String(value).replace('px', ''));
 const px = (n) => (n === 0 ? '0' : `${Math.round(n * 100) / 100}px`);
 
+/*
+  Figma отдаёт цвет двумя способами: строкой «#fafafa» и объектом с полями colorSpace,
+  components и hex. Берём hex, остальное для CSS не нужно.
+*/
+const plain = (value) =>
+  value && typeof value === 'object' && 'hex' in value ? value.hex : value;
+
 /** Разворачивает вложенные группы DTCG в плоскую карту: { 'FontSize.Heading.H1': 100 }. */
 const flatten = (node, prefix = '', out = {}) => {
   for (const [key, value] of Object.entries(node)) {
     if (key.startsWith('$')) continue;
-    if (value && typeof value === 'object' && '$value' in value) out[prefix + key] = value.$value;
+    if (value && typeof value === 'object' && '$value' in value) out[prefix + key] = plain(value.$value);
     else if (value && typeof value === 'object') flatten(value, `${prefix}${key}.`, out);
   }
   return out;
@@ -77,7 +84,7 @@ const emit = (prefix, mobile, desktopValues, format = (v) => px(num(v))) => {
 // У коллекции Colors один режим, поэтому берём его как есть, без медиазапроса.
 section('Colors');
 const [colorsMode] = Object.keys(collection('Colors'));
-emit('color', await modeOf('Colors', colorsMode), undefined, (v) => String(v));
+emit('color', await modeOf('Colors', colorsMode), undefined, (v) => String(v).toLowerCase());
 
 // --- Отступы, радиусы, bento ------------------------------------------------
 for (const [name, prefix, title] of [

@@ -1,12 +1,43 @@
 {
-  "Neutral_50": { "$type": "color", "$value": "#fafafa" },
-  "Neutral_100": { "$type": "color", "$value": "#f5f5f5" },
-  "Neutral_200": { "$type": "color", "$value": "#e5e5e5" },
-  "Neutral_300": { "$type": "color", "$value": "#d6d3d1" },
-  "Neutral_400": { "$type": "color", "$value": "#a3a3a3" },
-  "Neutral_500": { "$type": "color", "$value": "#737373" },
-  "Neutral_600": { "$type": "color", "$value": "#525252" },
-  "Neutral_700": { "$type": "color", "$value": "#404040" },
-  "Neutral_800": { "$type": "color", "$value": "#262626" },
-  "Neutral_900": { "$type": "color", "$value": "#171717" }
+  "Neutral 50": {
+    "$type": "color",
+    "$value": { "colorSpace": "srgb", "components": [0.9764705896377563, 0.9803921580314636, 0.9843137264251709], "alpha": 1, "hex": "#F9FAFB" }
+  },
+  "Neutral 100": {
+    "$type": "color",
+    "$value": { "colorSpace": "srgb", "components": [0.9529411792755127, 0.95686274766922, 0.9647058844566345], "alpha": 1, "hex": "#F3F4F6" }
+  },
+  "Neutral 200": {
+    "$type": "color",
+    "$value": { "colorSpace": "srgb", "components": [0.8980392217636108, 0.9058823585510254, 0.9215686321258545], "alpha": 1, "hex": "#E5E7EB" }
+  },
+  "Neutral 300": {
+    "$type": "color",
+    "$value": { "colorSpace": "srgb", "components": [0.8196078538894653, 0.8352941274642944, 0.8588235378265381], "alpha": 1, "hex": "#D1D5DB" }
+  },
+  "Neutral 400": {
+    "$type": "color",
+    "$value": { "colorSpace": "srgb", "components": [0.6117647290229797, 0.6392157077789307, 0.686274528503418], "alpha": 1, "hex": "#9CA3AF" }
+  },
+  "Neutral 500": {
+    "$type": "color",
+    "$value": { "colorSpace": "srgb", "components": [0.41960784792900085, 0.4470588266849518, 0.501960813999176], "alpha": 1, "hex": "#6B7280" }
+  },
+  "Neutral 600": {
+    "$type": "color",
+    "$value": { "colorSpace": "srgb", "components": [0.29411765933036804, 0.3333333432674408, 0.38823530077934265], "alpha": 1, "hex": "#4B5563" }
+  },
+  "Neutral 700": {
+    "$type": "color",
+    "$value": { "colorSpace": "srgb", "components": [0.21568627655506134, 0.2549019753932953, 0.3176470696926117], "alpha": 1, "hex": "#374151" }
+  },
+  "Neutral 800": {
+    "$type": "color",
+    "$value": { "colorSpace": "srgb", "components": [0.12156862765550613, 0.16078431904315948, 0.21568627655506134], "alpha": 1, "hex": "#1F2937" }
+  },
+  "Neutral 900": {
+    "$type": "color",
+    "$value": { "colorSpace": "srgb", "components": [0.06666667014360428, 0.0941176488995552, 0.15294118225574493], "alpha": 1, "hex": "#111827" }
+  },
+  "$extensions": { "com.figma.modeName": "Mode 1" }
 }
