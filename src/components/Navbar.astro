@@ -12,6 +12,8 @@ const Close = icons['x-02'];
 const isExternal = (href: string) => /^https?:\/\//.test(href);
 ---
 
+<div class="backdrop" data-menu-backdrop aria-hidden="true"></div>
+
 <header class="navbar" data-navbar>
   <a class="logo" href="/" aria-label="На главную">
     <Logo />
@@ -55,6 +57,25 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
 
 <style>
   /* Отступы навбара: сверху top-margin (64), снизу l, по краям margin — как в макете. */
+  /*
+    Подложка под раскрытым меню: размывает страницу целиком. Лежит ниже навбара,
+    но выше остального контента; в закрытом состоянии не перехватывает клики.
+  */
+  .backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    opacity: 0;
+    pointer-events: none;
+    backdrop-filter: blur(12px);
+    background: rgb(229 229 229 / 0.4);
+    transition: opacity 260ms ease;
+  }
+
+  .backdrop[data-visible='true'] {
+    opacity: 1;
+  }
+
   /*
     Навбар закреплён поверх страницы и прячется при скролле вниз, возвращаясь при скролле
     вверх. Место под него держит отступ у main (см. global.css), поэтому контент не прыгает,
@@ -209,7 +230,6 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
     background: var(--color-neutral-50);
     color: var(--color-neutral-800);
     white-space: nowrap;
-    filter: drop-shadow(0 12px 16px rgb(214 211 209 / 0.5));
     transition: transform 140ms ease;
   }
 
@@ -227,6 +247,7 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .backdrop,
     .navbar,
     .logo,
     .button-icon,
@@ -288,8 +309,14 @@ const isExternal = (href: string) => /^https?:\/\//.test(href);
     // Число пунктов нужно CSS, чтобы развернуть порядок задержек при закрытии.
     items.style.setProperty('--items-count', String(items.children.length));
 
+    const backdrop = document.querySelector<HTMLElement>('[data-menu-backdrop]');
+
     const setOpen = (open: boolean) => {
       menu.dataset.open = String(open);
+      if (backdrop) backdrop.dataset.visible = String(open);
+      // Меню живёт внутри навбара: если тот спрятан после прокрутки, возвращаем его,
+      // иначе кнопка закрытия уезжает за верх экрана.
+      if (open) navbar?.removeAttribute('data-hidden');
       toggle.setAttribute('aria-expanded', String(open));
       items.inert = !open;
     };
