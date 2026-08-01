@@ -11,8 +11,8 @@
   "listCover": {
     "discriminant": true,
     "value": {
-      "image": "/images/works/avenue-8-identity/listCover/value.gif",
-      "video": null
+      "image": "/images/works/avenue-8-identity/listCover/value/image.png",
+      "video": "/images/works/avenue-8-identity/listCover/value/video.mp4"
     }
   },
   "order": 0,

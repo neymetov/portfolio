@@ -11,8 +11,8 @@
   "listCover": {
     "discriminant": true,
     "value": {
-      "image": "/images/works/guavapay/listCover/value.gif",
-      "video": null
+      "image": "/images/works/guavapay/listCover/value/image.png",
+      "video": "/images/works/guavapay/listCover/value/video.mp4"
     }
   },
   "order": 0,
