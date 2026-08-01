@@ -2,6 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 import Chip from './Chip.astro';
 import { monthYear } from '../utils/format';
+import { listCover } from '../utils/work';
 
 // Широкая работа (фрейм work_hero): два блока рядом — текст и квадратное изображение.
 // Раньше панель с текстом лежала поверх картинки, из-за чего на десктопе и мобильном
@@ -20,6 +21,9 @@ interface Props {
 const { work, heading = 'h2' } = Astro.props;
 const { title, shortDescription, heroImage, date } = work.data;
 
+// На странице проекта — главное изображение, в списке работ — обложка для списка.
+const cover = heading === 'h1' ? heroImage : listCover(work);
+
 const Wrapper = heading === 'h1' ? 'div' : 'a';
 const Title = heading;
 
@@ -36,7 +40,7 @@ const dateLabel = heading === 'h1' ? monthYear(date) : null;
   </div>
 
   <figure class="cover">
-    <img class="media" src={heroImage} alt={title} />
+    <img class="media" src={cover} alt={title} />
   </figure>
 </Wrapper>
 

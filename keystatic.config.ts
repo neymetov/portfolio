@@ -224,7 +224,19 @@ export default config({
         showOnHome: fields.checkbox({ label: 'Показывать на главной в Last Projects' }),
         // Показывается тегом в шапке проекта. День не выводится — только месяц и год.
         date: fields.date({ label: 'Дата проекта (выводится как «July 2026»)' }),
-        heroImage: image('Главное изображение', 'works'),
+        heroImage: image('Главное изображение (в шапке проекта)', 'works'),
+        /*
+          По умолчанию в списках показывается то же изображение, что и в шапке проекта.
+          Тумблер включает отдельную обложку — например, когда внутри работы нужен
+          широкий кадр, а в карточке лучше смотрится другой.
+        */
+        listCover: fields.conditional(
+          fields.checkbox({ label: 'Своя обложка для списка работ' }),
+          {
+            false: fields.empty(),
+            true: image('Обложка для списка', 'works'),
+          },
+        ),
         order: fields.integer({ label: 'Порядок сортировки', defaultValue: 0 }),
         process: fields.relationship({ label: 'Связанный процесс', collection: 'processes' }),
         // Состав и порядок блоков галереи задаёт редактор — вёрстка не завязана на их число.

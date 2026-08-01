@@ -16,6 +16,11 @@ const works = defineCollection({
     showOnHome: z.boolean().default(false),
     date: z.string().nullable().default(null),
     heroImage: z.string(),
+    // Keystatic сохраняет условное поле парой: включён ли тумблер и само значение.
+    listCover: z
+      .object({ discriminant: z.boolean(), value: z.string().nullable().optional() })
+      .nullable()
+      .optional(),
     order: z.number().default(0),
     process: reference('processes').optional().nullable(),
     galleryBlocks: z

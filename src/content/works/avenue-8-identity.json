@@ -1,0 +1,85 @@
+{
+  "title": "Avenue 8 Identity",
+  "shortDescription": "Each space is crafted with intention, Every detail echoes your personal taste True architectural gem, Baku’s ultimate address for discerning luxury. Where architectural brilliance meets intimate exclusivity crafted for those who demand excellence in every detail.",
+  "categoryTags": [
+    "branding"
+  ],
+  "cardSize": "card",
+  "showOnHome": true,
+  "date": "2025-08-08",
+  "heroImage": "/images/works/avenue-8-identity/heroImage.gif",
+  "order": 0,
+  "galleryBlocks": [
+    {
+      "type": "full",
+      "images": [
+        {
+          "src": "/images/works/avenue-8-identity/galleryBlocks/0/images/0/src.png",
+          "alt": "avenue-logo"
+        }
+      ]
+    },
+    {
+      "type": "split-2",
+      "images": [
+        {
+          "src": "/images/works/avenue-8-identity/galleryBlocks/1/images/0/src.png",
+          "alt": "avenue-exterior"
+        },
+        {
+          "src": "/images/works/avenue-8-identity/galleryBlocks/1/images/1/src.png",
+          "alt": "avenue-color"
+        }
+      ]
+    },
+    {
+      "type": "full",
+      "images": [
+        {
+          "src": "/images/works/avenue-8-identity/galleryBlocks/2/images/0/src.png",
+          "alt": "avenue-stories"
+        }
+      ]
+    },
+    {
+      "type": "split-2",
+      "images": [
+        {
+          "src": "/images/works/avenue-8-identity/galleryBlocks/3/images/0/src.png",
+          "alt": "avenue-stationary"
+        },
+        {
+          "src": "/images/works/avenue-8-identity/galleryBlocks/3/images/1/src.png",
+          "alt": "avenue-folder"
+        }
+      ]
+    },
+    {
+      "type": "full",
+      "images": [
+        {
+          "src": "/images/works/avenue-8-identity/galleryBlocks/4/images/0/src.png",
+          "alt": "avenue-book"
+        }
+      ]
+    },
+    {
+      "type": "full",
+      "images": [
+        {
+          "src": "/images/works/avenue-8-identity/galleryBlocks/5/images/0/src.png",
+          "alt": "avenue-journal"
+        }
+      ]
+    },
+    {
+      "type": "full",
+      "images": [
+        {
+          "src": "/images/works/avenue-8-identity/galleryBlocks/6/images/0/src.png",
+          "alt": "avenue-brandwall"
+        }
+      ]
+    }
+  ]
+}

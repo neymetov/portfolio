@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { listCover } from '../utils/work';
 
 // Широкая работа без подписи: только изображение во всю ширину контента.
 // Пропорции те же, что у широкой карточки с панелью, — 1280×628 на десктопе,
@@ -9,11 +10,12 @@ interface Props {
 }
 
 const { work } = Astro.props;
-const { title, heroImage } = work.data;
+const { title } = work.data;
+const cover = listCover(work);
 ---
 
 <a class="banner" href={`/work/${work.id}`}>
-  <img class="media" src={heroImage} alt={title} loading="lazy" />
+  <img class="media" src={cover} alt={title} loading="lazy" />
 </a>
 
 <style>

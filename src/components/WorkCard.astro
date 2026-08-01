@@ -3,6 +3,7 @@ import { getEntry } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import Chip from './Chip.astro';
 import { monthYear } from '../utils/format';
+import { listCover } from '../utils/work';
 
 // Карточка работы: квадратная картинка, под ней название (p1), описание (p3) и тег рубрики.
 // Тег в покое скрыт и при наведении съезжает сверху вниз; место под него зарезервировано,
@@ -15,7 +16,8 @@ interface Props {
 }
 
 const { work, chip = 'category' } = Astro.props;
-const { title, shortDescription, heroImage, categoryTags, date } = work.data;
+const { title, shortDescription, categoryTags, date } = work.data;
+const cover = listCover(work);
 
 // Рубрик у работы может быть несколько, но плашка в макете одна — берём первую.
 const [firstTag] = categoryTags;
@@ -25,7 +27,7 @@ const chipLabel = chip === 'date' ? monthYear(date) : category?.data.title;
 
 <a class="work" href={`/work/${work.id}`}>
   <figure class="cover">
-    <img class="media ratio-square" src={heroImage} alt={title} loading="lazy" />
+    <img class="media ratio-square" src={cover} alt={title} loading="lazy" />
   </figure>
 
   <div class="info">
