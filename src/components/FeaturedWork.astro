@@ -2,7 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 import Chip from './Chip.astro';
 import { monthYear } from '../utils/format';
-import { listCover } from '../utils/work';
+import { listCover, type Cover } from '../utils/work';
 
 // Широкая работа (фрейм work_hero): два блока рядом — текст и квадратное изображение.
 // Раньше панель с текстом лежала поверх картинки, из-за чего на десктопе и мобильном
@@ -21,8 +21,8 @@ interface Props {
 const { work, heading = 'h2' } = Astro.props;
 const { title, shortDescription, heroImage, date } = work.data;
 
-// На странице проекта — главное изображение, в списке работ — обложка для списка.
-const cover = heading === 'h1' ? heroImage : listCover(work);
+// На странице проекта — главное изображение (всегда статичное), в списке — обложка для списка.
+const cover: Cover = heading === 'h1' ? { src: heroImage, video: null } : listCover(work);
 
 const Wrapper = heading === 'h1' ? 'div' : 'a';
 const Title = heading;
