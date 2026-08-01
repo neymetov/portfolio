@@ -203,10 +203,15 @@ export default config({
       schema: {
         title: fields.slug({ name: { label: 'Название' } }),
         shortDescription: fields.text({ label: 'Короткое описание', multiline: true }),
-        categoryTags: fields.array(
-          fields.relationship({ label: 'Рубрика', collection: 'categories' }),
-          { label: 'Рубрики', itemLabel: (p) => p.value ?? 'Рубрика' },
-        ),
+        /*
+          Рубрик может быть несколько: работа появится в каждой выбранной вкладке на /works.
+          Плашкой на карточке показывается первая из списка, поэтому порядок выбора имеет значение.
+        */
+        categoryTags: fields.multiRelationship({
+          label: 'Рубрики',
+          collection: 'categories',
+          description: 'Работа попадёт во все выбранные вкладки. Первая станет плашкой на карточке.',
+        }),
         /*
           Размер карточки определяет, каким блоком работа встанет на /works. Страница идёт
           по работам в порядке сортировки и сама собирает блоки: подряд идущие «маленькие»
