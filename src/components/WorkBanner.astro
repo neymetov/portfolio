@@ -15,11 +15,27 @@ const cover = listCover(work);
 ---
 
 <a class="banner" href={`/work/${work.id}`}>
-  <img class="media" src={cover} alt={title} loading="lazy" />
+  <img class="media" src={cover.src} alt={title} loading="lazy" />
+    {
+      cover.video && (
+        <video
+          class="media video"
+          src={cover.video}
+          poster={cover.src}
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          aria-hidden="true"
+        />
+      )
+    }
 </a>
 
 <style>
   .banner {
+    position: relative;
     display: block;
     overflow: clip;
     height: var(--bento-h-xxl);
@@ -31,6 +47,21 @@ const cover = listCover(work);
     height: 100%;
     object-fit: cover;
     border-radius: 0;
+  }
+
+  /*
+    Видео лежит поверх постера: пока оно грузится, виден статичный кадр,
+    а при выключенной анимации остаётся только он.
+  */
+  .video {
+    position: absolute;
+    inset: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .video {
+      display: none;
+    }
   }
 
   @media (min-width: 1024px) {

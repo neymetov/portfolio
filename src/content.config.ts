@@ -18,7 +18,13 @@ const works = defineCollection({
     heroImage: z.string(),
     // Keystatic сохраняет условное поле парой: включён ли тумблер и само значение.
     listCover: z
-      .object({ discriminant: z.boolean(), value: z.string().nullable().optional() })
+      .object({
+        discriminant: z.boolean(),
+        value: z
+          .object({ image: z.string(), video: z.string().nullable().default(null) })
+          .nullable()
+          .optional(),
+      })
       .nullable()
       .optional(),
     order: z.number().default(0),

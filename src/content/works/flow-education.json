@@ -4,9 +4,12 @@
     "branding"
   ],
   "cardSize": "card",
-  "showOnHome": false,
+  "showOnHome": true,
   "date": "2022-04-20",
   "heroImage": "/images/works/flow-education/heroImage.png",
+  "listCover": {
+    "discriminant": false
+  },
   "order": 0,
   "galleryBlocks": []
 }

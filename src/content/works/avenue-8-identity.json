@@ -7,7 +7,14 @@
   "cardSize": "card",
   "showOnHome": true,
   "date": "2025-08-08",
-  "heroImage": "/images/works/avenue-8-identity/heroImage.gif",
+  "heroImage": "/images/works/avenue-8-identity/heroImage.png",
+  "listCover": {
+    "discriminant": true,
+    "value": {
+      "image": "/images/works/avenue-8-identity/listCover/value.gif",
+      "video": null
+    }
+  },
   "order": 0,
   "galleryBlocks": [
     {
@@ -24,7 +31,7 @@
       "images": [
         {
           "src": "/images/works/avenue-8-identity/galleryBlocks/1/images/0/src.png",
-          "alt": "avenue-exterior"
+          "alt": "avenue-navigation"
         },
         {
           "src": "/images/works/avenue-8-identity/galleryBlocks/1/images/1/src.png",

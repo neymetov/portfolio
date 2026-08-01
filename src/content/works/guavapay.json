@@ -1,0 +1,20 @@
+{
+  "title": "Guavapay",
+  "categoryTags": [
+    "product-identity",
+    "branding"
+  ],
+  "cardSize": "card",
+  "showOnHome": true,
+  "date": "2023-02-22",
+  "heroImage": "/images/works/guavapay/heroImage.png",
+  "listCover": {
+    "discriminant": true,
+    "value": {
+      "image": "/images/works/guavapay/listCover/value.gif",
+      "video": null
+    }
+  },
+  "order": 0,
+  "galleryBlocks": []
+}

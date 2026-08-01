@@ -40,7 +40,22 @@ const dateLabel = heading === 'h1' ? monthYear(date) : null;
   </div>
 
   <figure class="cover">
-    <img class="media" src={cover} alt={title} />
+    <img class="media" src={cover.src} alt={title} />
+    {
+      cover.video && (
+        <video
+          class="media video"
+          src={cover.video}
+          poster={cover.src}
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          aria-hidden="true"
+        />
+      )
+    }
   </figure>
 </Wrapper>
 
@@ -72,6 +87,7 @@ const dateLabel = heading === 'h1' ? monthYear(date) : null;
   }
 
   .cover {
+    position: relative;
     margin: 0;
     overflow: clip;
     border-radius: var(--radius-xxl);
@@ -82,6 +98,21 @@ const dateLabel = heading === 'h1' ? monthYear(date) : null;
     width: 100%;
     aspect-ratio: 1 / 1;
     border-radius: 0;
+  }
+
+  /*
+    Видео лежит поверх постера: пока оно грузится, виден статичный кадр,
+    а при выключенной анимации остаётся только он.
+  */
+  .video {
+    position: absolute;
+    inset: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .video {
+      display: none;
+    }
   }
 
   @media (min-width: 1024px) {

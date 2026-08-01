@@ -27,7 +27,22 @@ const chipLabel = chip === 'date' ? monthYear(date) : category?.data.title;
 
 <a class="work" href={`/work/${work.id}`}>
   <figure class="cover">
-    <img class="media ratio-square" src={cover} alt={title} loading="lazy" />
+    <img class="media ratio-square" src={cover.src} alt={title} loading="lazy" />
+    {
+      cover.video && (
+        <video
+          class="media ratio-square video"
+          src={cover.video}
+          poster={cover.src}
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+          aria-hidden="true"
+        />
+      )
+    }
   </figure>
 
   <div class="info">
@@ -55,6 +70,7 @@ const chipLabel = chip === 'date' ? monthYear(date) : category?.data.title;
 
   /* Рамка обрезает картинку, поэтому при наведении она увеличивается внутри карточки. */
   .cover {
+    position: relative;
     margin: 0;
     overflow: clip;
     border-radius: var(--radius-xxl);
@@ -68,6 +84,21 @@ const chipLabel = chip === 'date' ? monthYear(date) : category?.data.title;
   .work:hover .media,
   .work:focus-visible .media {
     transform: scale(1.04);
+  }
+
+  /*
+    Видео лежит поверх постера: пока оно грузится, виден статичный кадр,
+    а при выключенной анимации остаётся только он.
+  */
+  .video {
+    position: absolute;
+    inset: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .video {
+      display: none;
+    }
   }
 
   .info {
